@@ -1,1355 +1,1919 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>সৌদিয়া বোরকা হাউজ - Premium Design Gallery</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Material Symbols -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-    <style>
-        :root {
-            --md-primary: #FF2A7A;
-            --md-primary-dark: #D8005A;
-            --md-primary-container: rgba(255, 42, 122, 0.15);
-            --md-on-primary: #FFFFFF;
-            --md-secondary: #E040FB;
-            --md-accent-gold: #FFD700;
-            --md-bg: #09090B;
-            --md-surface: #121217;
-            --md-surface-variant: #1A1A22;
-            --md-surface-glass: rgba(22, 22, 30, 0.65);
-            --md-card-border: rgba(255, 255, 255, 0.08);
-
-            --md-text-main: #FAFAFA;
-            --md-text-muted: #8E8E9A;
-            --md-text-dim: #555562;
-
-            --radius-xs: 8px;
-            --radius-sm: 14px;
-            --radius-md: 22px;
-            --radius-lg: 32px;
-            --radius-full: 9999px;
-
-            --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            --shadow-card: 0 12px 32px 0 rgba(0, 0, 0, 0.37);
-            --shadow-glow: 0 0 25px rgba(255, 42, 122, 0.25);
-            --shadow-floating: 0 20px 40px -10px rgba(255, 42, 122, 0.35);
-
-            --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --transition-expressive: cubic-bezier(0.2, 0.8, 0.2, 1);
-            --font-main: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
-        }
-
-        .theme-borqa { --category-accent: #FF2A7A; }
-        .theme-apron { --category-accent: #00E5FF; }
-        .theme-abaya { --category-accent: #E040FB; }
-        .theme-khimar { --category-accent: #00E676; }
-        .theme-niqab { --category-accent: #FF9100; }
-        .theme-gown { --category-accent: #FFD700; }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #030304;
-            font-family: var(--font-main);
-            color: var(--md-text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-        }
-
-        #app-viewport {
-            width: 100%;
-            max-width: 440px;
-            height: 100%;
-            max-height: 950px;
-            background-color: var(--md-bg);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
-            transform: translateZ(0);
-        }
-
-        @media (min-width: 450px) {
-            #app-viewport {
-                height: 94vh;
-                border-radius: 44px;
-                border: 1px solid var(--md-card-border);
-            }
-        }
-
-        .screen-container {
-            flex: 1;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .screen {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.94) translateY(16px) translateZ(0);
-            transition: opacity 0.35s var(--transition-expressive), transform 0.35s var(--transition-expressive);
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding-bottom: 110px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-            will-change: transform, opacity;
-        }
-
-        .screen::-webkit-scrollbar { display: none; }
-
-        .screen.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1) translateY(0) translateZ(0);
-        }
-
-        .ripple-target {
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-        }
-
-        .ripple-wave {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(0);
-            animation: ripple-animation 0.5s linear;
-            pointer-events: none;
-        }
-
-        @keyframes ripple-animation {
-            to { transform: scale(4); opacity: 0; }
-        }
-
-        #screen-splash {
-            background: radial-gradient(circle at center, #1A0512 0%, #030304 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .splash-logo-box {
-            position: relative;
-            width: 130px;
-            height: 130px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: translateZ(0);
-        }
-
-        .splash-glow-ring {
-            position: absolute;
-            inset: -10px;
-            border-radius: var(--radius-full);
-            background: linear-gradient(45deg, var(--md-primary), var(--md-secondary));
-            filter: blur(25px);
-            opacity: 0.5;
-            animation: pulseGlow 3s infinite ease-in-out;
-            will-change: transform, opacity;
-        }
-
-        .splash-icon {
-            font-size: 68px;
-            color: var(--md-text-main);
-            transform: rotate(-10deg);
-            z-index: 2;
-            animation: floatHero 3s infinite ease-in-out;
-            will-change: transform;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(0.9) translateZ(0); opacity: 0.4; }
-            50% { transform: scale(1.15) translateZ(0); opacity: 0.8; }
-        }
-
-        @keyframes floatHero {
-            0%, 100% { transform: translateY(0) rotate(-10deg) translateZ(0); }
-            50% { transform: translateY(-12px) rotate(-5deg) translateZ(0); }
-        }
-
-        .splash-title {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF 0%, #FFA2C2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-        }
-
-        .splash-tagline {
-            color: var(--md-text-muted);
-            font-size: 13px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .skeleton-shimmer-bar {
-            position: absolute;
-            bottom: 50px;
-            width: 140px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            transform: translateZ(0);
-        }
-
-        .skeleton-shimmer-bar::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, var(--md-primary), transparent);
-            animation: shimmerLinear 1.5s infinite;
-            will-change: transform;
-        }
-
-        @keyframes shimmerLinear {
-            0% { transform: translateX(-100%) translateZ(0); }
-            100% { transform: translateX(100%) translateZ(0); }
-        }
-
-        #screen-onboarding {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 30px 24px;
-            background-color: var(--md-bg);
-        }
-
-        .onboard-top-bar { display: flex; justify-content: flex-end; }
-
-        .btn-skip {
-            background: var(--md-surface-glass);
-            border: 1px solid var(--md-card-border);
-            color: var(--md-text-muted);
-            padding: 8px 18px;
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .onboard-slider-viewport { width: 100%; overflow: hidden; }
-
-        .onboard-track {
-            display: flex;
-            width: 300%;
-            transition: transform 0.4s var(--spring-bounce);
-            will-change: transform;
-            transform: translateZ(0);
-        }
-
-        .onboard-slide {
-            width: 33.333%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 0 12px;
-        }
-
-        .slide-frame {
-            width: 270px;
-            height: 360px;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 28px;
-            box-shadow: var(--shadow-card);
-            border: 1px solid var(--md-card-border);
-            background: var(--md-surface-variant);
-        }
-
-        .slide-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        .onboard-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-
-        .dot-pill {
-            width: 10px; height: 10px;
-            border-radius: var(--radius-full);
-            background: rgba(255, 255, 255, 0.15);
-            transition: all 0.3s var(--spring-bounce);
-        }
-
-        .dot-pill.active {
-            width: 32px;
-            background: var(--md-primary);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .btn-expressive-primary {
-            background: linear-gradient(135deg, var(--md-primary), var(--md-primary-dark));
-            color: var(--md-on-primary);
-            border: none;
-            border-radius: var(--radius-full);
-            padding: 18px 32px;
-            font-size: 16px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            cursor: pointer;
-            box-shadow: var(--shadow-floating);
-            transition: transform 0.15s ease;
-        }
-
-        .btn-expressive-primary:active { transform: scale(0.96) translateZ(0); }
-
-        .floating-header {
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 30;
-            background: rgba(9, 9, 11, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--md-card-border);
-        }
-
-        .greeting-title {
-            font-size: 20px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, #B0B0C0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .greeting-sub {
-            font-size: 11px;
-            color: var(--md-primary);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .search-container { padding: 12px 20px; }
-
-        .glass-search-box {
-            background: var(--md-surface-glass);
-            border: 1px solid var(--md-card-border);
-            border-radius: var(--radius-full);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: var(--shadow-soft);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-
-        .glass-search-box input {
-            border: none;
-            outline: none;
-            background: transparent;
-            width: 100%;
-            color: var(--md-text-main);
-            font-family: var(--font-main);
-            font-size: 14px;
-        }
-
-        .recent-chips-bar {
-            display: flex;
-            gap: 8px;
-            padding: 0 20px 12px 20px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-        .recent-chips-bar::-webkit-scrollbar { display: none; }
-
-        .mini-chip {
-            background: var(--md-surface-variant);
-            border: 1px solid var(--md-card-border);
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: 11px;
-            color: var(--md-text-muted);
-            white-space: nowrap;
-            cursor: pointer;
-        }
-
-        .hero-banner-section { position: relative; margin-bottom: 20px; }
-
-        .hero-slider-track {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            padding: 0 20px;
-            scrollbar-width: none;
-            snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-        .hero-slider-track::-webkit-scrollbar { display: none; }
-
-        .hero-slide-card {
-            min-width: 88%;
-            height: 160px;
-            border-radius: var(--radius-lg);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-            snap-align: center;
-            flex-shrink: 0;
-            border: 1px solid var(--md-card-border);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
-            transform: translateZ(0);
-        }
-
-        .hero-slide-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 20%, rgba(9, 9, 11, 0.95) 100%);
-        }
-
-        .hero-slide-content { position: relative; z-index: 2; }
-
-        .categories-wrapper { margin-bottom: 20px; }
-
-        .chip-scroll-track {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 4px 20px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-        .chip-scroll-track::-webkit-scrollbar { display: none; }
-
-        .m3-chip {
-            padding: 10px 20px;
-            background: var(--md-surface-glass);
-            border: 1px solid var(--md-card-border);
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--md-text-muted);
-            white-space: nowrap;
-            cursor: pointer;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .m3-chip.active {
-            background: var(--md-primary-container);
-            color: var(--md-text-main);
-            border-color: var(--category-accent, var(--md-primary));
-        }
-
-        .chip-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--category-accent, var(--md-primary));
-        }
-
-        .section-header-title {
-            padding: 0 20px 12px 20px;
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .m3-gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            padding: 0 20px 24px 20px;
-        }
-
-        .m3-glass-card {
-            background: var(--md-surface-glass);
-            border: 1px solid var(--md-card-border);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            cursor: pointer;
-            animation: cardStaggerIn 0.35s var(--transition-expressive) forwards;
-            will-change: transform, opacity;
-            transform: translateZ(0);
-        }
-
-        @keyframes cardStaggerIn {
-            from { opacity: 0; transform: translateY(16px) translateZ(0); }
-            to { opacity: 1; transform: translateY(0) translateZ(0); }
-        }
-
-        .card-media-wrapper {
-            width: 100%;
-            height: 220px;
-            aspect-ratio: 3/4;
-            position: relative;
-            overflow: hidden;
-            background: var(--md-surface-variant);
-        }
-
-        .card-media-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.2s ease;
-        }
-
-        .card-badge-container {
-            position: absolute;
-            top: 10px; left: 10px; right: 10px;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .badge-pill {
-            padding: 4px 10px;
-            border-radius: var(--radius-full);
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .badge-premium { background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 140, 0, 0.9)); color: #000; }
-        .badge-new { background: linear-gradient(135deg, rgba(124, 77, 255, 0.9), rgba(220, 64, 251, 0.9)); color: #FFF; }
-
-        .btn-card-fav {
-            width: 32px; height: 32px;
-            border-radius: var(--radius-full);
-            background: rgba(18, 18, 23, 0.6);
-            border: 1px solid var(--md-card-border);
-            color: #FFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: auto;
-            cursor: pointer;
-        }
-
-        .btn-card-fav.is-fav {
-            color: var(--md-primary);
-            background: rgba(255, 42, 122, 0.2);
-            border-color: var(--md-primary);
-        }
-
-        .card-info-footer {
-            padding: 12px;
-            background: linear-gradient(180deg, rgba(26, 26, 34, 0.4), rgba(18, 18, 23, 0.9));
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .code-chip {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--md-text-main);
-        }
-
-        .location-glass-card {
-            background: var(--md-surface-glass);
-            border: 1px solid var(--md-card-border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin: 20px;
-        }
-
-        .loc-info-item { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
-        .loc-info-item .material-symbols-rounded {
-            color: var(--md-primary);
-            font-size: 24px;
-            background: var(--md-primary-container);
-            padding: 10px;
-            border-radius: var(--radius-sm);
-        }
-
-        .google-map-frame {
-            width: 100%; height: 220px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--md-card-border);
-            margin-top: 10px;
-        }
-
-        .google-map-frame iframe { width: 100%; height: 100%; border: 0; }
-
-        .pro-image-viewer {
-            position: fixed;
-            inset: 0;
-            background: rgba(3, 3, 4, 0.96);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
-            transform: translateZ(0);
-        }
-
-        .pro-image-viewer.active { opacity: 1; pointer-events: auto; }
-
-        .viewer-top-bar { padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-
-        .viewer-stage {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        .viewer-img-target {
-            max-width: 95%;
-            max-height: 80vh;
-            object-fit: contain;
-            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
-            will-change: transform;
-            transform: scale(1) translateZ(0);
-        }
-
-        .close-circle-btn {
-            width: 44px; height: 44px;
-            border-radius: var(--radius-full);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--md-card-border);
-            color: #FFF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .m3-navigation-bar {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 76px;
-            background: rgba(18, 18, 23, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-top: 1px solid var(--md-card-border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
-            transform: translateZ(0);
-        }
-
-        .m3-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--md-text-muted);
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 25%;
-        }
-
-        .nav-icon-pill {
-            width: 56px; height: 32px;
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .m3-nav-item.active { color: var(--md-text-main); }
-        .m3-nav-item.active .nav-icon-pill {
-            background: var(--md-primary-container);
-            color: var(--md-primary);
-        }
-
-        .app-footer { padding: 30px 20px; text-align: center; border-top: 1px solid var(--md-card-border); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>সৌদিয়া বোরকা হাউজ - Premium Design Gallery</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<style>
+:root {
+  --md-primary: #FF2A7A;
+  --md-primary-dark: #D8005A;
+  --md-primary-container: rgba(255, 42, 122, 0.15);
+  --md-on-primary: #FFFFFF;
+  --md-secondary: #E040FB;
+  --md-accent-gold: #FFD700;
+  --md-bg: #09090B;
+  --md-surface: #121217;
+  --md-surface-variant: #1A1A22;
+  --md-surface-glass: rgba(22, 22, 30, 0.65);
+  --md-card-border: rgba(255, 255, 255, 0.08);
+  --md-text-main: #FAFAFA;
+  --md-text-muted: #8E8E9A;
+  --md-text-dim: #555562;
+
+  --radius-xs: 8px;
+  --radius-sm: 14px;
+  --radius-md: 22px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+
+  --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 12px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-glow: 0 0 25px rgba(255, 42, 122, 0.25);
+  --shadow-floating: 0 20px 40px -10px rgba(255, 42, 122, 0.35);
+
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-expressive: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --font-main: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Z-Index hierarchy - single source of truth */
+  --z-base: 1;
+  --z-content: 10;
+  --z-header: 30;
+  --z-bottom-nav: 100;
+  --z-ad: 150;
+  --z-splash: 900;
+  --z-onboarding: 800;
+  --z-viewer: 2000;
+  --z-viewer-controls: 2010;
+}
+
+.theme-borqa { --category-accent: #FF2A7A; }
+.theme-apron { --category-accent: #00E5FF; }
+.theme-abaya { --category-accent: #E040FB; }
+.theme-khimar { --category-accent: #00E676; }
+.theme-niqab { --category-accent: #FF9100; }
+.theme-gown { --category-accent: #FFD700; }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #030304;
+  font-family: var(--font-main);
+  color: var(--md-text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#app-viewport {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  max-height: 100vh;
+  background-color: var(--md-bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+  transform: translateZ(0);
+}
+
+@media (min-width: 450px) {
+  #app-viewport {
+    height: 94vh;
+    max-height: 950px;
+    border-radius: 44px;
+    border: 1px solid var(--md-card-border);
+  }
+}
+
+.top-ad-banner-container {
+  width: 100%;
+  min-height: 50px;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-ad);
+  border-bottom: 1px solid var(--md-card-border);
+  flex-shrink: 0;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.top-ad-banner-container iframe { display: block; margin: 0 auto; max-width: 100%; }
+
+.screen-container {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.97) translateY(12px) translateZ(0);
+  transition: opacity 0.28s var(--transition-expressive), transform 0.28s var(--transition-expressive), visibility 0s linear 0.28s;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 90px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  z-index: var(--z-content);
+}
+
+.screen::-webkit-scrollbar { display: none; }
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateY(0) translateZ(0);
+  transition: opacity 0.28s var(--transition-expressive), transform 0.28s var(--transition-expressive), visibility 0s linear 0s;
+}
+
+#screen-splash.screen { z-index: var(--z-splash); padding-bottom: 0; }
+#screen-onboarding.screen { z-index: var(--z-onboarding); padding-bottom: 0; }
+
+.ripple-target { position: relative; overflow: hidden !important; transform: translateZ(0); }
+
+.ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0);
+  animation: ripple-animation 0.5s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
+
+/* Splash */
+#screen-splash {
+  background: radial-gradient(circle at center, #1A0512 0%, #030304 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.splash-logo-box {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateZ(0);
+}
+
+.splash-glow-ring {
+  position: absolute;
+  inset: -10px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(45deg, var(--md-primary), var(--md-secondary));
+  filter: blur(25px);
+  opacity: 0.5;
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.splash-icon {
+  font-size: 68px;
+  color: var(--md-text-main);
+  transform: rotate(-10deg);
+  z-index: 2;
+  animation: floatHero 3s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(0.9) translateZ(0); opacity: 0.4; }
+  50% { transform: scale(1.15) translateZ(0); opacity: 0.8; }
+}
+
+@keyframes floatHero {
+  0%, 100% { transform: translateY(0) rotate(-10deg) translateZ(0); }
+  50% { transform: translateY(-12px) rotate(-5deg) translateZ(0); }
+}
+
+.splash-title {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFA2C2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+
+.splash-tagline {
+  color: var(--md-text-muted);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.skeleton-shimmer-bar {
+  position: absolute;
+  bottom: 50px;
+  width: 140px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.skeleton-shimmer-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, var(--md-primary), transparent);
+  animation: shimmerLinear 1.5s infinite;
+}
+
+@keyframes shimmerLinear {
+  0% { transform: translateX(-100%) translateZ(0); }
+  100% { transform: translateX(100%) translateZ(0); }
+}
+
+/* Onboarding */
+#screen-onboarding {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 24px 30px 24px;
+  background-color: var(--md-bg);
+}
+
+.onboard-top-bar { display: flex; justify-content: flex-end; }
+
+.btn-skip {
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  color: var(--md-text-muted);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-height: 36px;
+}
+
+.onboard-slider-viewport { width: 100%; overflow: hidden; }
+
+.onboard-track {
+  display: flex;
+  width: 300%;
+  transition: transform 0.4s var(--spring-bounce);
+  transform: translateZ(0);
+}
+
+.onboard-slide {
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.slide-frame {
+  width: 100%;
+  max-width: 240px;
+  height: 300px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto 20px auto;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--md-card-border);
+  background: var(--md-surface-variant);
+}
+
+.slide-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.onboard-dots { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+
+.dot-pill {
+  width: 10px; height: 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.3s var(--spring-bounce);
+}
+
+.dot-pill.active { width: 32px; background: var(--md-primary); box-shadow: var(--shadow-glow); }
+
+.btn-expressive-primary {
+  background: linear-gradient(135deg, var(--md-primary), var(--md-primary-dark));
+  color: var(--md-on-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  cursor: pointer;
+  box-shadow: var(--shadow-floating);
+  transition: transform 0.15s ease;
+}
+
+.btn-expressive-primary:active { transform: scale(0.96) translateZ(0); }
+
+/* Headers & Inputs */
+.floating-header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: rgba(9, 9, 11, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--md-card-border);
+}
+
+.greeting-title {
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFFFFF, #B0B0C0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.greeting-sub { font-size: 11px; color: var(--md-primary); font-weight: 700; letter-spacing: 0.5px; }
+
+.search-container { padding: 12px 20px; }
+
+.glass-search-box {
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  border-radius: var(--radius-full);
+  padding: 8px 14px 8px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  color: var(--md-text-main);
+  font-family: var(--font-main);
+  font-size: 14px;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  cursor: text;
+}
+
+.search-clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--md-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.recent-chips-bar {
+  display: flex;
+  gap: 8px;
+  padding: 0 20px 12px 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.recent-chips-bar::-webkit-scrollbar { display: none; }
+
+.mini-chip {
+  background: var(--md-surface-variant);
+  border: 1px solid var(--md-card-border);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  color: var(--md-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-banner-section { position: relative; margin-bottom: 20px; }
+
+.hero-slider-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 20px;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero-slider-track::-webkit-scrollbar { display: none; }
+
+.hero-slide-card {
+  min-width: 88%;
+  height: 160px;
+  border-radius: var(--radius-lg);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--md-surface-variant);
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  border: 1px solid var(--md-card-border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  transform: translateZ(0);
+}
+
+.hero-slide-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 20%, rgba(9, 9, 11, 0.95) 100%);
+}
+
+.hero-slide-content { position: relative; z-index: 2; }
+
+.categories-wrapper { margin-bottom: 20px; }
+
+.chip-scroll-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 20px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chip-scroll-track::-webkit-scrollbar { display: none; }
+
+.m3-chip {
+  padding: 8px 18px;
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--md-text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.m3-chip.active {
+  background: var(--md-primary-container);
+  color: var(--md-text-main);
+  border-color: var(--category-accent, var(--md-primary));
+}
+
+.chip-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--category-accent, var(--md-primary)); }
+
+.section-header-title {
+  padding: 0 20px 12px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.m3-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px 24px 16px;
+}
+
+@media (min-width: 380px) {
+  .m3-gallery-grid { gap: 14px; padding: 0 20px 24px 20px; }
+}
+
+.m3-glass-card {
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transform: translateZ(0);
+}
+
+.card-media-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-height: 240px;
+  position: relative;
+  overflow: hidden;
+  background: var(--md-surface-variant);
+}
+
+.card-media-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-media-wrapper img.loaded { opacity: 1; }
+
+.card-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #1A1A22 25%, #262632 50%, #1A1A22 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s infinite;
+}
+
+@keyframes skeletonLoading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.svg-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1A1A22 0%, #0D0D12 100%);
+  color: var(--md-text-muted);
+  padding: 16px;
+  text-align: center;
+  border: 1px dashed rgba(255, 42, 122, 0.2);
+}
+
+.svg-placeholder .material-symbols-rounded { font-size: 40px; color: var(--md-primary); margin-bottom: 8px; opacity: 0.8; }
+
+.svg-placeholder .ph-text { font-size: 11px; font-weight: 600; }
+
+.svg-placeholder .ph-code {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--md-text-main);
+  margin-top: 4px;
+}
+
+.card-badge-container {
+  position: absolute;
+  top: 10px; left: 10px; right: 10px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.badge-pill { padding: 4px 10px; border-radius: var(--radius-full); font-size: 10px; font-weight: 800; text-transform: uppercase; }
+
+.badge-premium { background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 140, 0, 0.9)); color: #000; }
+.badge-new { background: linear-gradient(135deg, rgba(124, 77, 255, 0.9), rgba(220, 64, 251, 0.9)); color: #FFF; }
+
+.badge-stack { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+
+.btn-card-fav {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  background: rgba(18, 18, 23, 0.6);
+  border: 1px solid var(--md-card-border);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.btn-card-fav.is-fav { color: var(--md-primary); background: rgba(255, 42, 122, 0.25); border-color: var(--md-primary); }
+
+.card-info-footer {
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(26, 26, 34, 0.4), rgba(18, 18, 23, 0.9));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-chip { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 800; color: var(--md-text-main); }
+
+.empty-state { grid-column: 1 / -1; text-align: center; padding: 40px 10px; }
+
+.location-glass-card {
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 20px;
+}
+
+.loc-info-item { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+
+.loc-info-item .material-symbols-rounded {
+  color: var(--md-primary);
+  font-size: 24px;
+  background: var(--md-primary-container);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.google-map-frame {
+  width: 100%; height: 220px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--md-card-border);
+  margin-top: 10px;
+  background: var(--md-surface-variant);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google-map-frame iframe { width: 100%; height: 100%; border: 0; position: relative; z-index: 1; }
+
+.map-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--md-text-muted);
+  font-size: 12px;
+  text-align: center;
+  padding: 16px;
+  z-index: 0;
+}
+
+.map-fallback .material-symbols-rounded { font-size: 32px; color: var(--md-primary); }
+
+.map-fallback a { color: var(--md-primary); font-weight: 700; text-decoration: none; }
+
+/* Viewer */
+.pro-image-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 3, 4, 0.96);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: var(--z-viewer);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  transform: translateZ(0);
+}
+
+.pro-image-viewer.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.25s ease, visibility 0s linear 0s;
+}
+
+.viewer-top-bar {
+  padding: 20px;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: var(--z-viewer-controls);
+  position: relative;
+}
+
+.viewer-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  min-height: 0;
+}
+
+.viewer-img-target {
+  max-width: 95%;
+  max-height: 100%;
+  object-fit: contain;
+  will-change: transform;
+  transform: scale(1) translate(0px, 0px);
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.close-circle-btn {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--md-card-border);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.viewer-bottom-bar { padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); text-align: center; position: relative; z-index: var(--z-viewer-controls); }
+
+.m3-navigation-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: calc(76px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgba(18, 18, 23, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid var(--md-card-border);
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  z-index: var(--z-bottom-nav);
+  transform: translateZ(0);
+}
+
+.m3-navigation-bar.visible { display: flex; }
+
+.m3-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--md-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 25%;
+  min-height: 48px;
+  justify-content: center;
+}
+
+.nav-icon-pill {
+  width: 56px; height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.m3-nav-item.active { color: var(--md-text-main); }
+.m3-nav-item.active .nav-icon-pill { background: var(--md-primary-container); color: var(--md-primary); }
+
+.app-footer { padding: 30px 20px; text-align: center; border-top: 1px solid var(--md-card-border); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
 </head>
 <body>
 
-    <div id="app-viewport">
-        <div class="screen-container">
-            
-            <!-- SPLASH SCREEN -->
-            <div id="screen-splash" class="screen active" role="region" aria-label="Splash Screen">
-                <div class="splash-logo-box">
-                    <div class="splash-glow-ring"></div>
-                    <span class="material-symbols-rounded splash-icon">styler</span>
-                </div>
-                <h1 class="splash-title">সৌদিয়া বোরকা হাউজ</h1>
-                <p class="splash-tagline">Tailoring Design Gallery</p>
-                <div class="skeleton-shimmer-bar"></div>
-            </div>
+<div id="app-viewport">
+  <div class="top-ad-banner-container" id="topAdBanner"></div>
 
-            <!-- ONBOARDING SCREEN -->
-            <div id="screen-onboarding" class="screen" role="region" aria-label="Onboarding">
-                <div class="onboard-top-bar">
-                    <button class="btn-skip ripple-target" onclick="navigateTo('screen-home')" aria-label="Skip Onboarding">স্কিপ</button>
-                </div>
-                
-                <div class="onboard-slider-viewport">
-                    <div class="onboard-track" id="onboardTrack">
-                        <div class="onboard-slide">
-                            <div class="slide-frame">
-                                <img src="borqa1.jpg" decoding="async" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800'" alt="Exclusive Burqa">
-                            </div>
-                            <h2 style="font-size: 22px; margin-bottom: 8px;">এক্সক্লুসিভ বোরকা কালেকশন</h2>
-                            <p style="color: var(--md-text-muted); font-size: 13px;">সবাইকে চমকে দেওয়ার মতো আধুনিক বোরকা ডিজাইন ক্যাটালগ।</p>
-                        </div>
-                        <div class="onboard-slide">
-                            <div class="slide-frame">
-                                <img src="abaya1.jpg" decoding="async" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1563178406-4cdc2923acbc?w=800'" alt="Abaya Stitching">
-                            </div>
-                            <h2 style="font-size: 22px; margin-bottom: 8px;">সহজ সেলাই ক্যাটালগ</h2>
-                            <p style="color: var(--md-text-muted); font-size: 13px;">দোকানে আসার পূর্বেই নিজের পছন্দের ডিজাইন কোড বেছে নিন।</p>
-                        </div>
-                        <div class="onboard-slide">
-                            <div class="slide-frame">
-                                <img src="gown1.jpg" decoding="async" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800'" alt="Gown Crafting">
-                            </div>
-                            <h2 style="font-size: 22px; margin-bottom: 8px;">নিখুঁত কারিগরি সেলাই</h2>
-                            <p style="color: var(--md-text-muted); font-size: 13px;">অভিজ্ঞ কারিগর দ্বারা নিখুঁত ও আরামদায়ক সেলাইয়ের নিশ্চয়তা।</p>
-                        </div>
-                    </div>
-                </div>
+  <div class="screen-container">
 
-                <div>
-                    <div class="onboard-dots">
-                        <div class="dot-pill active"></div>
-                        <div class="dot-pill"></div>
-                        <div class="dot-pill"></div>
-                    </div>
-                    <button class="btn-expressive-primary ripple-target" id="onboardNextBtn" onclick="nextOnboardSlide()">
-                        পরবর্তী <span class="material-symbols-rounded">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- HOME PAGE -->
-            <div id="screen-home" class="screen" role="region" aria-label="Home Gallery">
-                <div class="floating-header">
-                    <div>
-                        <span class="greeting-sub">PREMIUM GALLERY</span>
-                        <h2 class="greeting-title">সৌদিয়া বোরকা হাউজ</h2>
-                    </div>
-                    <span class="material-symbols-rounded" style="color: var(--md-primary); font-size: 28px;">verified</span>
-                </div>
-
-                <div class="search-container">
-                    <div class="glass-search-box">
-                        <span class="material-symbols-rounded" style="color: var(--md-text-muted);">search</span>
-                        <input type="text" id="searchInput" placeholder="ডিজাইন কোড লিখুন (যেমন: SBH-001)..." aria-label="Search Design Code">
-                    </div>
-                </div>
-
-                <div class="recent-chips-bar">
-                    <span class="mini-chip" onclick="quickSearch('SBH-001')">SBH-001</span>
-                    <span class="mini-chip" onclick="quickSearch('SBH-003')">SBH-003</span>
-                    <span class="mini-chip" onclick="quickSearch('SBH-005')">SBH-005</span>
-                </div>
-
-                <div class="hero-banner-section">
-                    <div class="hero-slider-track" id="heroBannerTrack"></div>
-                </div>
-
-                <div class="categories-wrapper">
-                    <div class="chip-scroll-track" id="homeCategoryChips"></div>
-                </div>
-
-                <div class="section-header-title">
-                    <span id="gallerySectionTitle">ট্রেন্ডিং কালেকশন</span>
-                    <span style="font-size: 12px; color: var(--md-primary); font-weight: 600;" id="designCountBadge">0 Designs</span>
-                </div>
-
-                <div class="m3-gallery-grid" id="mainGalleryGrid"></div>
-
-                <div class="app-footer">
-                    <h3 style="font-size: 16px; color: var(--md-text-main);">সৌদিয়া বোরকা হাউজ</h3>
-                    <p style="font-size: 12px; color: var(--md-text-dim); margin-top: 4px;">Exclusive Tailoring & Stitching Gallery</p>
-                </div>
-            </div>
-
-            <!-- CATEGORIES TAB -->
-            <div id="screen-categories" class="screen" role="region" aria-label="Categories">
-                <div class="floating-header">
-                    <h2 class="greeting-title">ক্যাটাগরি সমূহ</h2>
-                </div>
-                <div id="fullCategoryStack" style="padding: 16px 20px;"></div>
-            </div>
-
-            <!-- NEW DESIGNS TAB -->
-            <div id="screen-new" class="screen" role="region" aria-label="New Arrivals">
-                <div class="floating-header">
-                    <div>
-                        <span class="greeting-sub">LATEST ARRIVALS</span>
-                        <h2 class="greeting-title">নতুন ডিজাইন</h2>
-                    </div>
-                </div>
-                <div class="m3-gallery-grid" id="newDesignsGrid" style="padding-top: 16px;"></div>
-            </div>
-
-            <!-- LOCATION TAB -->
-            <div id="screen-location" class="screen" role="region" aria-label="Showroom Location">
-                <div class="floating-header">
-                    <h2 class="greeting-title">লোকেশন ও যোগাযোগ</h2>
-                </div>
-                
-                <div class="location-glass-card">
-                    <h2 style="color: var(--md-primary); margin-bottom: 20px; font-size: 22px;">সৌদিয়া বোরকা হাউজ</h2>
-                    
-                    <div class="loc-info-item">
-                        <span class="material-symbols-rounded">location_on</span>
-                        <div>
-                            <h3 style="font-size: 15px; color: var(--md-text-main);">শো-রুম ঠিকানা</h3>
-                            <p style="font-size: 13px; color: var(--md-text-muted); margin-top: 2px;">দোকান নং #১২, নিউ মার্কেট শপিং কমপ্লেক্স, ফেনী, বাংলাদেশ।</p>
-                        </div>
-                    </div>
-
-                    <div class="loc-info-item">
-                        <span class="material-symbols-rounded">schedule</span>
-                        <div>
-                            <h3 style="font-size: 15px; color: var(--md-text-main);">খোলা থাকার সময়</h3>
-                            <p style="font-size: 13px; color: var(--md-text-muted); margin-top: 2px;">প্রতিদিন সকাল ১০:০০ টা - রাত ৯:৩০ টা</p>
-                        </div>
-                    </div>
-
-                    <div class="loc-info-item">
-                        <span class="material-symbols-rounded">call</span>
-                        <div>
-                            <h3 style="font-size: 15px; color: var(--md-text-main);">ফোন নাম্বার</h3>
-                            <p style="font-size: 13px; color: var(--md-text-muted); margin-top: 2px;">+880 1800-000000</p>
-                        </div>
-                    </div>
-
-                    <h3 style="margin-top: 10px; margin-bottom: 10px; font-size: 14px;">গুগল ম্যাপ</h3>
-                    <div class="google-map-frame">
-                        <iframe title="Google Map Showroom Location" src="https://maps.google.com/maps?q=Feni%20New%20Market&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- FULLSCREEN IMAGE VIEWER -->
-        <div class="pro-image-viewer" id="proImageViewer" aria-hidden="true">
-            <div class="viewer-top-bar">
-                <span class="code-chip" style="font-size: 16px; color: var(--md-primary);" id="viewerCodeTitle">SBH-000</span>
-                <button class="close-circle-btn ripple-target" onclick="closeImageViewer()" aria-label="Close Viewer">
-                    <span class="material-symbols-rounded">close</span>
-                </button>
-            </div>
-            <div class="viewer-stage" id="viewerStage">
-                <img src="" id="viewerTargetImg" class="viewer-img-target" alt="Design Full View">
-            </div>
-            <div class="viewer-bottom-bar" style="padding: 20px; text-align: center;">
-                <p style="font-size: 12px; color: var(--md-text-muted);">Double tap to zoom • Swipe left/right for next</p>
-            </div>
-        </div>
-
-        <!-- BOTTOM NAV BAR -->
-        <nav class="m3-navigation-bar" id="m3BottomNav" style="display: none;">
-            <div class="m3-nav-item active ripple-target" onclick="switchTab('screen-home', this)">
-                <div class="nav-icon-pill">
-                    <span class="material-symbols-rounded">home</span>
-                </div>
-                <span>হোম</span>
-            </div>
-            <div class="m3-nav-item ripple-target" onclick="switchTab('screen-categories', this)">
-                <div class="nav-icon-pill">
-                    <span class="material-symbols-rounded">grid_view</span>
-                </div>
-                <span>ক্যাটাগরি</span>
-            </div>
-            <div class="m3-nav-item ripple-target" onclick="switchTab('screen-new', this)">
-                <div class="nav-icon-pill">
-                    <span class="material-symbols-rounded">auto_awesome</span>
-                </div>
-                <span>নতুন ডিজাইন</span>
-            </div>
-            <div class="m3-nav-item ripple-target" onclick="switchTab('screen-location', this)">
-                <div class="nav-icon-pill">
-                    <span class="material-symbols-rounded">distance</span>
-                </div>
-                <span>লোকেশন</span>
-            </div>
-        </nav>
-
+    <div id="screen-splash" class="screen active" role="region" aria-label="Splash Screen">
+      <div class="splash-logo-box">
+        <div class="splash-glow-ring"></div>
+        <span class="material-symbols-rounded splash-icon">styler</span>
+      </div>
+      <h1 class="splash-title">সৌদিয়া বোরকা হাউজ</h1>
+      <p class="splash-tagline">Tailoring Design Gallery</p>
+      <div class="skeleton-shimmer-bar"></div>
     </div>
 
-    <script>
-        'use strict';
+    <div id="screen-onboarding" class="screen" role="region" aria-label="Onboarding">
+      <div class="onboard-top-bar">
+        <button class="btn-skip ripple-target" onclick="completeOnboarding()" aria-label="Skip Onboarding">স্কিপ</button>
+      </div>
+      <div class="onboard-slider-viewport">
+        <div class="onboard-track" id="onboardTrack">
+          <div class="onboard-slide">
+            <div class="slide-frame">
+              <img src="borqa1.jpg" decoding="async" onerror="handleImageError(this, 'SBH-001')" alt="Exclusive Burqa">
+            </div>
+            <h2 style="font-size: 22px; margin-bottom: 8px;">এক্সক্লুসিভ বোরকা কালেকশন</h2>
+            <p style="color: var(--md-text-muted); font-size: 13px;">সবাইকে চমকে দেওয়ার মতো আধুনিক বোরকা ডিজাইন ক্যাটালগ।</p>
+          </div>
+          <div class="onboard-slide">
+            <div class="slide-frame">
+              <img src="abaya1.jpg" decoding="async" onerror="handleImageError(this, 'SBH-015')" alt="Abaya Stitching">
+            </div>
+            <h2 style="font-size: 22px; margin-bottom: 8px;">সহজ সেলাই ক্যাটালগ</h2>
+            <p style="color: var(--md-text-muted); font-size: 13px;">দোকানে আসার পূর্বেই নিজের পছন্দের ডিজাইন কোড বেছে নিন।</p>
+          </div>
+          <div class="onboard-slide">
+            <div class="slide-frame">
+              <img src="gown1.jpg" decoding="async" onerror="handleImageError(this, 'SBH-039')" alt="Gown Crafting">
+            </div>
+            <h2 style="font-size: 22px; margin-bottom: 8px;">নিখুঁত কারিগরি সেলাই</h2>
+            <p style="color: var(--md-text-muted); font-size: 13px;">অভিজ্ঞ কারিগর দ্বারা নিখুঁত ও আরামদায়ক সেলাইয়ের নিশ্চয়তা।</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="onboard-dots">
+          <div class="dot-pill active" data-dot="0"></div>
+          <div class="dot-pill" data-dot="1"></div>
+          <div class="dot-pill" data-dot="2"></div>
+        </div>
+        <button class="btn-expressive-primary ripple-target" id="onboardNextBtn" onclick="nextOnboardSlide()">
+          পরবর্তী <span class="material-symbols-rounded">arrow_forward</span>
+        </button>
+      </div>
+    </div>
 
-        const GALLERY_CONFIG = {
-            banner: ['gown1.jpg', 'borqa1.jpg'],
-            categories: [
-                { id: 'borqa', name: 'বোরকা', theme: 'theme-borqa', folder: '', files: ['borqa1.jpg', 'borqa2.jpg', 'borqa3.jpg', 'borqa4.jpg', 'borqa5.jpg', 'borqa6.jpg', 'borqa7.jpg', 'borqa8.jpg', 'borqa9.jpg', 'borqa10.jpg', 'borqa11.jpg', 'borqa12.jpg', 'borqa13.jpg', 'borqa14.jpg'] },
-                { id: 'abaya', name: 'আবায়া', theme: 'theme-abaya', folder: '', files: ['abaya1.jpg', 'abaya2.jpg', 'abaya3.jpg', 'abaya4.jpg', 'abaya5.jpg', 'abaya6.jpg', 'abaya7.jpg', 'abaya8.jpg', 'abaya9.jpg', 'abaya10.jpg'] },
-                { id: 'khimar', name: 'খিমার', theme: 'theme-khimar', folder: '', files: ['khimar1.jpg', 'khimar2.jpg', 'khimar3.jpg', 'khimar4.jpg', 'khimar5.jpg', 'khimar6.jpg', 'khimar7.jpg'] },
-                { id: 'niqab', name: 'নিকাব', theme: 'theme-niqab', folder: '', files: ['niqab1.jpg', 'niqab2.jpg', 'niqab3.jpg', 'niqab4.jpg', 'niqab5.jpg', 'niqab6.jpg', 'niqab7.jpg'] },
-                { id: 'gown', name: 'গাউন', theme: 'theme-gown', folder: '', files: ['gown1.jpg', 'gown2.jpg', 'gown3.jpg', 'gown4.jpg', 'gown5.jpg', 'gown6.jpg', 'gown7.jpg', 'gown8.jpg', 'gown9.jpg', 'gown10.jpg', 'gown11.jpg'] },
-                { id: 'apron', name: 'এপ্রোন', theme: 'theme-apron', folder: '', files: ['apron1.jpg'] }
-            ]
-        };
+    <div id="screen-home" class="screen" role="region" aria-label="Home Gallery">
+      <div class="floating-header">
+        <div>
+          <span class="greeting-sub">PREMIUM GALLERY</span>
+          <h2 class="greeting-title">সৌদিয়া বোরকা হাউজ</h2>
+        </div>
+        <span class="material-symbols-rounded" style="color: var(--md-primary); font-size: 28px;">verified</span>
+      </div>
 
-        const FALLBACKS = [
-            'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800',
-            'https://images.unsplash.com/photo-1563178406-4cdc2923acbc?w=800',
-            'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800',
-            'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800'
-        ];
+      <div class="search-container">
+        <div class="glass-search-box">
+          <span class="material-symbols-rounded" style="color: var(--md-text-muted);">search</span>
+          <input type="text" id="searchInput" placeholder="ডিজাইন কোড বা ক্যাটাগরি..." aria-label="Search Design Code" autocomplete="off">
+          <button type="button" class="search-clear-btn" id="searchClearBtn" style="display:none;" onclick="clearSearch()" aria-label="Clear Search">
+            <span class="material-symbols-rounded" style="font-size: 18px;">close</span>
+          </button>
+        </div>
+      </div>
 
-        let MASTER_DATABASE = [];
-        let CATEGORY_INDEX = new Map();
+      <div class="recent-chips-bar">
+        <span class="mini-chip ripple-target" onclick="quickSearch('SBH-001')">SBH-001</span>
+        <span class="mini-chip ripple-target" onclick="quickSearch('SBH-003')">SBH-003</span>
+        <span class="mini-chip ripple-target" onclick="quickSearch('SBH-005')">SBH-005</span>
+        <span class="mini-chip ripple-target" onclick="quickSearch('বোরকা')">বোরকা</span>
+        <span class="mini-chip ripple-target" onclick="quickSearch('আবায়া')">আবায়া</span>
+      </div>
 
-        const state = {
-            activeScreen: 'screen-splash',
-            activeCategory: 'all',
-            favorites: new Set(),
-            viewerIndex: 0,
-            activeList: [],
-            zoomScale: 1
-        };
+      <div class="hero-banner-section">
+        <div class="hero-slider-track" id="heroBannerTrack"></div>
+      </div>
 
-        let slideIndex = 0;
+      <div class="categories-wrapper">
+        <div class="chip-scroll-track" id="homeCategoryChips"></div>
+      </div>
 
-        function initGalleryEngine() {
-            let counter = 1;
-            MASTER_DATABASE = [];
-            CATEGORY_INDEX.clear();
+      <div class="section-header-title">
+        <span id="gallerySectionTitle">সকল ডিজাইন</span>
+        <span style="font-size: 12px; color: var(--md-primary); font-weight: 600;" id="designCountBadge">0 Designs</span>
+      </div>
 
-            GALLERY_CONFIG.categories.forEach(cat => {
-                const catItems = [];
-                cat.files.forEach((file) => {
-                    const code = `SBH-${String(counter).padStart(3, '0')}`;
-                    const item = {
-                        id: `item-${counter}`,
-                        code: code,
-                        categoryKey: cat.id,
-                        categoryName: cat.name,
-                        theme: cat.theme,
-                        path: `${cat.folder}${file}`,
-                        fallback: FALLBACKS[counter % FALLBACKS.length],
-                        isNew: cat.id === 'gown' || counter % 3 === 0,
-                        isPremium: counter % 2 === 0
-                    };
-                    MASTER_DATABASE.push(item);
-                    catItems.push(item);
-                    counter++;
-                });
-                CATEGORY_INDEX.set(cat.id, catItems);
-            });
+      <div class="m3-gallery-grid" id="mainGalleryGrid"></div>
+
+      <div class="app-footer">
+        <h3 style="font-size: 16px; color: var(--md-text-main);">সৌদিয়া বোরকা হাউজ</h3>
+        <p style="font-size: 12px; color: var(--md-text-dim); margin-top: 4px;">Exclusive Tailoring &amp; Stitching Gallery</p>
+      </div>
+    </div>
+
+    <div id="screen-categories" class="screen" role="region" aria-label="Categories">
+      <div class="floating-header">
+        <h2 class="greeting-title">ক্যাটাগরি সমূহ</h2>
+      </div>
+      <div id="fullCategoryStack" style="padding: 16px 20px;"></div>
+    </div>
+
+    <div id="screen-new" class="screen" role="region" aria-label="New Arrivals">
+      <div class="floating-header">
+        <div>
+          <span class="greeting-sub">LATEST ARRIVALS</span>
+          <h2 class="greeting-title">নতুন ডিজাইন</h2>
+        </div>
+      </div>
+      <div class="m3-gallery-grid" id="newDesignsGrid" style="padding-top: 16px;"></div>
+    </div>
+
+    <div id="screen-location" class="screen" role="region" aria-label="Showroom Location">
+      <div class="floating-header">
+        <h2 class="greeting-title">লোকেশন ও যোগাযোগ</h2>
+      </div>
+      <div class="location-glass-card">
+        <h2 style="color: var(--md-primary); margin-bottom: 20px; font-size: 22px;">সৌদিয়া বোরকা হাউজ</h2>
+        <div class="loc-info-item">
+          <span class="material-symbols-rounded">location_on</span>
+          <div>
+            <h3 style="font-size: 15px; color: var(--md-text-main);">শো-রুম ঠিকানা</h3>
+            <p style="font-size: 13px; color: var(--md-text-muted); margin-top: 2px;">শহীদ মার্কেট (২য় তলা), কলেজ রোড, ফেনী।</p>
+          </div>
+        </div>
+        <div class="loc-info-item">
+          <span class="material-symbols-rounded">schedule</span>
+          <div>
+            <h3 style="font-size: 15px; color: var(--md-text-main);">খোলা থাকার সময়</h3>
+            <p style="font-size: 13px; color: var(--md-text-muted); margin-top: 2px;">প্রতিদিন সকাল ১০:০০ টা - রাত ৯:৩০ টা</p>
+          </div>
+        </div>
+        <a href="tel:01745510355" style="text-decoration: none;" class="loc-info-item">
+          <span class="material-symbols-rounded">call</span>
+          <div>
+            <h3 style="font-size: 15px; color: var(--md-text-main);">ফোন নাম্বার</h3>
+            <p style="font-size: 13px; color: var(--md-primary); font-weight: 700; margin-top: 2px;">০১৭৪৫-৫১০৩৫৫ (কল করতে চাপুন)</p>
+          </div>
+        </a>
+        <h3 style="margin-top: 10px; margin-bottom: 10px; font-size: 14px;">গুগল ম্যাপ</h3>
+        <div class="google-map-frame" id="mapFrameContainer">
+          <div class="map-fallback" id="mapFallback">
+            <span class="material-symbols-rounded">map</span>
+            <span>ম্যাপ লোড করা যায়নি।</span>
+            <a href="https://maps.google.com/maps?q=%E0%A6%B6%E0%A6%B9%E0%A7%80%E0%A6%A6%20%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A7%87%E0%A6%9F%20%E0%A6%95%E0%A6%B2%E0%A7%87%E0%A6%9C%20%E0%A6%B0%E0%A7%8B%E0%A6%A1%20%E0%A6%AB%E0%A7%87%E0%A6%A8%E0%A7%80" target="_blank" rel="noopener">গুগল ম্যাপে দেখুন</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pro-image-viewer" id="proImageViewer" aria-hidden="true">
+    <div class="viewer-top-bar">
+      <span class="code-chip" style="font-size: 16px; color: var(--md-primary);" id="viewerCodeTitle">SBH-000</span>
+      <button class="close-circle-btn ripple-target" onclick="closeImageViewer()" aria-label="Close Viewer">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+    <div class="viewer-stage" id="viewerStage">
+      <div id="viewerImgContainer" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"></div>
+    </div>
+    <div class="viewer-bottom-bar">
+      <p style="font-size: 12px; color: var(--md-text-muted);">Double tap / Pinch to zoom • Swipe left/right for next • Swipe down to close</p>
+    </div>
+  </div>
+
+  <nav class="m3-navigation-bar" id="m3BottomNav">
+    <div class="m3-nav-item active ripple-target" data-screen="screen-home" onclick="switchTab('screen-home')">
+      <div class="nav-icon-pill"><span class="material-symbols-rounded">home</span></div>
+      <span>হোম</span>
+    </div>
+    <div class="m3-nav-item ripple-target" data-screen="screen-categories" onclick="switchTab('screen-categories')">
+      <div class="nav-icon-pill"><span class="material-symbols-rounded">grid_view</span></div>
+      <span>ক্যাটাগরি</span>
+    </div>
+    <div class="m3-nav-item ripple-target" data-screen="screen-new" onclick="switchTab('screen-new')">
+      <div class="nav-icon-pill"><span class="material-symbols-rounded">auto_awesome</span></div>
+      <span>নতুন ডিজাইন</span>
+    </div>
+    <div class="m3-nav-item ripple-target" data-screen="screen-location" onclick="switchTab('screen-location')">
+      <div class="nav-icon-pill"><span class="material-symbols-rounded">distance</span></div>
+      <span>লোকেশন</span>
+    </div>
+  </nav>
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   CONFIG / CONSTANTS
+============================================================ */
+const GALLERY_CONFIG = {
+  banner: ['gown1.jpg', 'borqa1.jpg'],
+  categories: [
+    { id: 'borqa',  name: 'বোরকা',  theme: 'theme-borqa',  files: ['borqa1.jpg','borqa2.jpg','borqa3.jpg','borqa4.jpg','borqa5.jpg','borqa6.jpg','borqa7.jpg','borqa8.jpg','borqa9.jpg','borqa10.jpg','borqa11.jpg','borqa12.jpg','borqa13.jpg','borqa14.jpg'] },
+    { id: 'abaya',  name: 'আবায়া',  theme: 'theme-abaya',  files: ['abaya1.jpg','abaya2.jpg','abaya3.jpg','abaya4.jpg','abaya5.jpg','abaya6.jpg','abaya7.jpg','abaya8.jpg','abaya9.jpg','abaya10.jpg'] },
+    { id: 'khimar', name: 'খিমার',  theme: 'theme-khimar', files: ['khimar1.jpg','khimar2.jpg','khimar3.jpg','khimar4.jpg','khimar5.jpg','khimar6.jpg','khimar7.jpg'] },
+    { id: 'niqab',  name: 'নিকাব',  theme: 'theme-niqab',  files: ['niqab1.jpg','niqab2.jpg','niqab3.jpg','niqab4.jpg','niqab5.jpg','niqab6.jpg','niqab7.jpg'] },
+    { id: 'gown',   name: 'গাউন',   theme: 'theme-gown',   files: ['gown1.jpg','gown2.jpg','gown3.jpg','gown4.jpg','gown5.jpg','gown6.jpg','gown7.jpg','gown8.jpg','gown9.jpg','gown10.jpg','gown11.jpg'] },
+    { id: 'apron',  name: 'এপ্রোন', theme: 'theme-apron',  files: ['apron1.jpg'] }
+  ]
+};
+
+const CATEGORY_ORDER = ['all', 'borqa', 'abaya', 'khimar', 'niqab', 'gown', 'apron'];
+const NAV_SCREENS = ['screen-home', 'screen-categories', 'screen-new', 'screen-location'];
+const HIDE_NAV_SCREENS = ['screen-splash', 'screen-onboarding'];
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 4;
+const DOUBLE_TAP_ZOOM = 2.5;
+const SOCIAL_BAR_DELAY_MS = 300000;
+
+/* ============================================================
+   SINGLE SOURCE OF TRUTH STATE
+============================================================ */
+const state = {
+  activeScreen: 'screen-splash',
+  onboardingSlide: 0,
+  selectedCategory: 'all',
+  searchQuery: '',
+  favorites: new Set(),
+  activeList: [],
+  viewerOpen: false,
+  viewerIndex: 0,
+  zoomScale: 1,
+  panX: 0,
+  panY: 0,
+  mapLoaded: false,
+  socialBarInjected: false,
+  heroAutoIndex: 0,
+  heroInteracting: false
+};
+
+let MASTER_DATABASE = [];
+let CATEGORY_INDEX = new Map();
+let heroAutoTimer = null;
+
+/* ============================================================
+   SAFE STORAGE
+============================================================ */
+function safeGetStorage(key) {
+  try { return localStorage.getItem(key); } catch (e) { return null; }
+}
+function safeSetStorage(key, val) {
+  try { localStorage.setItem(key, val); return true; } catch (e) { return false; }
+}
+
+function loadFavorites() {
+  const saved = safeGetStorage('sbh_fav_designs');
+  if (!saved) return;
+  try {
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed)) state.favorites = new Set(parsed);
+  } catch (e) { /* corrupted data ignored safely */ }
+}
+function saveFavorites() {
+  safeSetStorage('sbh_fav_designs', JSON.stringify([...state.favorites]));
+}
+
+/* ============================================================
+   IMAGE LOADING (ONE reusable system for all image contexts)
+============================================================ */
+function handleImageLoad(imgEl) {
+  imgEl.classList.add('loaded');
+  const wrapper = imgEl.closest('.card-media-wrapper') || imgEl.parentElement;
+  const skel = wrapper ? wrapper.querySelector('.card-skeleton') : null;
+  if (skel) skel.remove();
+}
+
+function handleImageError(imgEl, code) {
+  if (!imgEl || imgEl.dataset.fallbackApplied === '1') return;
+  imgEl.dataset.fallbackApplied = '1';
+
+  const parent = imgEl.parentElement;
+  if (!parent) return;
+
+  imgEl.style.display = 'none';
+
+  const skel = parent.querySelector('.card-skeleton');
+  if (skel) skel.remove();
+
+  if (parent.querySelector('.svg-placeholder')) return;
+
+  const ph = document.createElement('div');
+  ph.className = 'svg-placeholder';
+  ph.innerHTML =
+    '<span class="material-symbols-rounded">styler</span>' +
+    '<span class="ph-text">ডিজাইন ইমেজ পাওয়া যায়নি</span>' +
+    '<span class="ph-code">' + escapeHtml(code || 'SBH-DESIGN') + '</span>';
+  parent.appendChild(ph);
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = String(str == null ? '' : str);
+  return div.innerHTML;
+}
+
+/* ============================================================
+   GALLERY DATA ENGINE
+============================================================ */
+function initGalleryEngine() {
+  let counter = 1;
+  MASTER_DATABASE = [];
+  CATEGORY_INDEX = new Map();
+
+  GALLERY_CONFIG.categories.forEach(cat => {
+    const items = [];
+    cat.files.forEach(file => {
+      const code = 'SBH-' + String(counter).padStart(3, '0');
+      const item = {
+        id: 'item-' + counter,
+        code: code,
+        categoryKey: cat.id,
+        categoryName: cat.name,
+        theme: cat.theme,
+        path: file,
+        isNew: cat.id === 'gown' || counter % 3 === 0,
+        isPremium: counter % 2 === 0
+      };
+      MASTER_DATABASE.push(item);
+      items.push(item);
+      counter++;
+    });
+    CATEGORY_INDEX.set(cat.id, items);
+  });
+}
+
+/* ============================================================
+   BOOTSTRAP
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  loadFavorites();
+  initGalleryEngine();
+  setupRipples();
+  renderHeroBanners();
+  renderCategoryChips();
+  renderGalleryGrid(MASTER_DATABASE);
+  renderFullCategoryStack();
+  renderNewDesignsGrid();
+  setupViewerGestures();
+  setupDebounceSearch();
+  setupHistoryBack();
+  loadTopAdBanner();
+  scheduleSocialBarAd();
+
+  const startTime = Date.now();
+  const onboardingDone = safeGetStorage('sbh_onboarding_completed') === 'true';
+  const MIN_SPLASH_MS = 1000;
+  const MAX_SPLASH_MS = 2500; // hard ceiling so splash can never hang indefinitely
+
+  let launched = false;
+  function launch() {
+    if (launched) return;
+    launched = true;
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, MIN_SPLASH_MS - elapsed);
+    setTimeout(() => {
+      if (onboardingDone) {
+        navigateTo('screen-home', false);
+      } else {
+        navigateTo('screen-onboarding', false);
+      }
+    }, remaining);
+  }
+
+  // Launch on load, but never depend solely on external resources finishing.
+  window.addEventListener('load', launch);
+  setTimeout(launch, MAX_SPLASH_MS);
+});
+
+/* ============================================================
+   SCREEN NAVIGATION (single source of truth)
+============================================================ */
+function navigateTo(screenId, pushHistory = true) {
+  const targetEl = document.getElementById(screenId);
+  if (!targetEl) return;
+
+  document.querySelectorAll('.screen').forEach(scr => {
+    scr.classList.toggle('active', scr.id === screenId);
+  });
+  state.activeScreen = screenId;
+
+  const bottomNav = document.getElementById('m3BottomNav');
+  if (bottomNav) {
+    bottomNav.classList.toggle('visible', !HIDE_NAV_SCREENS.includes(screenId));
+  }
+
+  document.querySelectorAll('.m3-nav-item').forEach(nav => {
+    nav.classList.toggle('active', nav.getAttribute('data-screen') === screenId);
+  });
+
+  if (screenId === 'screen-location' && !state.mapLoaded) {
+    loadGoogleMapLazy();
+  }
+
+  if (pushHistory) {
+    history.pushState({ screen: screenId }, '', '#' + screenId);
+  }
+}
+
+function switchTab(screenId) {
+  if (!NAV_SCREENS.includes(screenId)) return;
+  if (screenId === state.activeScreen) return;
+
+  if (screenId === 'screen-home') {
+    if (state.searchQuery) {
+      handleLiveSearch(state.searchQuery, false);
+    } else {
+      applyCategoryFilter(state.selectedCategory);
+    }
+  }
+  navigateTo(screenId);
+}
+
+/* ============================================================
+   ANDROID BACK / BROWSER HISTORY
+   Priority: viewer open -> close viewer
+             non-home screen -> home
+             home -> default browser behavior
+============================================================ */
+function setupHistoryBack() {
+  history.replaceState({ screen: 'screen-splash' }, '', '#splash');
+  window.addEventListener('popstate', () => {
+    if (state.viewerOpen) {
+      closeImageViewer(false);
+      return;
+    }
+    if (state.activeScreen !== 'screen-home' &&
+        state.activeScreen !== 'screen-splash' &&
+        state.activeScreen !== 'screen-onboarding') {
+      navigateTo('screen-home', false);
+      return;
+    }
+    // Already on Home: let the browser's natural back behavior proceed.
+  });
+}
+
+/* ============================================================
+   ADVERTISEMENT (isolated, failure-safe)
+============================================================ */
+function loadTopAdBanner() {
+  const container = document.getElementById('topAdBanner');
+  if (!container) return;
+  try {
+    const configScript = document.createElement('script');
+    configScript.type = 'text/javascript';
+    configScript.text =
+      "atOptions = { 'key':'548bfacd5e2680d52e78806bf46dce1f','format':'iframe','height':50,'width':320,'params':{} };";
+    container.appendChild(configScript);
+
+    const loaderScript = document.createElement('script');
+    loaderScript.type = 'text/javascript';
+    loaderScript.src = 'https://www.highperformanceformat.com/548bfacd5e2680d52e78806bf46dce1f/invoke.js';
+    loaderScript.async = true;
+    loaderScript.onerror = () => { container.style.display = 'none'; };
+    container.appendChild(loaderScript);
+  } catch (e) {
+    container.style.display = 'none';
+  }
+}
+
+function scheduleSocialBarAd() {
+  setTimeout(() => {
+    if (state.socialBarInjected) return;
+    try {
+      const script = document.createElement('script');
+      script.src = 'https://pl30727473.effectivecpmnetwork.com/00/4f/db/004fdb7abb9d6764ae8566292b609e32.js';
+      script.async = true;
+      script.onerror = () => { /* ad failed silently, app continues */ };
+      document.body.appendChild(script);
+      state.socialBarInjected = true;
+    } catch (e) {
+      /* ad injection failed safely, app continues */
+    }
+  }, SOCIAL_BAR_DELAY_MS);
+}
+
+/* ============================================================
+   GOOGLE MAP (lazy, failure-safe)
+============================================================ */
+function loadGoogleMapLazy() {
+  const container = document.getElementById('mapFrameContainer');
+  if (!container) return;
+  state.mapLoaded = true;
+
+  try {
+    const iframe = document.createElement('iframe');
+    iframe.title = 'Google Map Showroom Location';
+    iframe.loading = 'lazy';
+    iframe.src = 'https://maps.google.com/maps?q=%E0%A6%B6%E0%A6%B9%E0%A7%80%E0%A6%A6%20%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A7%87%E0%A6%9F%20%E0%A6%95%E0%A6%B2%E0%A7%87%E0%A6%9C%20%E0%A6%B0%E0%A7%8B%E0%A6%A1%20%E0%A6%AB%E0%A7%87%E0%A6%A8%E0%A7%80&t=&z=16&ie=UTF8&iwloc=&output=embed';
+    iframe.onerror = () => { showMapFallback(container); };
+    container.appendChild(iframe);
+  } catch (e) {
+    showMapFallback(container);
+  }
+}
+
+function showMapFallback(container) {
+  const fallback = container.querySelector('#mapFallback');
+  if (fallback) fallback.style.display = 'flex';
+}
+
+/* ============================================================
+   RIPPLE EFFECT (event delegation, single listener)
+============================================================ */
+function setupRipples() {
+  document.addEventListener('click', function (e) {
+    const target = e.target.closest('.ripple-target');
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const circle = document.createElement('span');
+    const diameter = Math.max(rect.width, rect.height);
+    const radius = diameter / 2;
+
+    circle.style.width = circle.style.height = diameter + 'px';
+    circle.style.left = (e.clientX - rect.left - radius) + 'px';
+    circle.style.top = (e.clientY - rect.top - radius) + 'px';
+    circle.className = 'ripple-wave';
+
+    const existing = target.querySelector('.ripple-wave');
+    if (existing) existing.remove();
+
+    target.appendChild(circle);
+    setTimeout(() => { if (circle.parentElement) circle.remove(); }, 550);
+  }, { passive: true });
+}
+
+/* ============================================================
+   HERO BANNER
+============================================================ */
+function renderHeroBanners() {
+  const track = document.getElementById('heroBannerTrack');
+  if (!track) return;
+
+  const frag = document.createDocumentFragment();
+  GALLERY_CONFIG.banner.forEach(file => {
+    const card = document.createElement('div');
+    card.className = 'hero-slide-card';
+    card.style.backgroundImage = "url('" + file + "')";
+
+    // Failure-safe: preload check via Image object; on error, remove bg and show icon fallback.
+    const testImg = new Image();
+    testImg.onerror = () => {
+      card.style.backgroundImage = 'none';
+      const fallbackIcon = document.createElement('span');
+      fallbackIcon.className = 'material-symbols-rounded';
+      fallbackIcon.style.cssText = 'position:absolute; top:16px; left:16px; font-size:28px; color:var(--md-primary); opacity:0.7; z-index:1;';
+      fallbackIcon.textContent = 'styler';
+      card.prepend(fallbackIcon);
+    };
+    testImg.src = file;
+
+    card.innerHTML += '<div class="hero-slide-content">' +
+      '<span class="badge-pill badge-premium" style="margin-bottom: 6px; display: inline-block;">FEATURED</span>' +
+      '<h3 style="font-size: 18px; color: #FFF;">সৌদিয়া প্রিমিয়াম ক্যাটালগ</h3>' +
+      '<p style="font-size: 12px; color: var(--md-text-muted);">নতুন সেলাই প্যাটার্ন</p>' +
+      '</div>';
+    frag.appendChild(card);
+  });
+
+  track.innerHTML = '';
+  track.appendChild(frag);
+
+  track.addEventListener('touchstart', () => { state.heroInteracting = true; }, { passive: true });
+  track.addEventListener('touchend', () => {
+    setTimeout(() => { state.heroInteracting = false; }, 3000);
+  }, { passive: true });
+
+  if (heroAutoTimer) clearInterval(heroAutoTimer);
+  state.heroAutoIndex = 0;
+  heroAutoTimer = setInterval(() => {
+    if (state.heroInteracting) return;
+    if (!track.firstElementChild) return;
+    state.heroAutoIndex = (state.heroAutoIndex + 1) % GALLERY_CONFIG.banner.length;
+    const cardWidth = track.firstElementChild.offsetWidth + 16;
+    track.scrollTo({ left: state.heroAutoIndex * cardWidth, behavior: 'smooth' });
+  }, 4000);
+}
+
+/* ============================================================
+   CATEGORY CHIPS
+============================================================ */
+function renderCategoryChips() {
+  const track = document.getElementById('homeCategoryChips');
+  if (!track) return;
+
+  const frag = document.createDocumentFragment();
+
+  const allChip = document.createElement('div');
+  allChip.className = 'm3-chip active theme-borqa';
+  allChip.setAttribute('data-cat', 'all');
+  allChip.onclick = () => selectCategory('all');
+  allChip.innerHTML = '<span class="chip-dot"></span> সকল ডিজাইন';
+  frag.appendChild(allChip);
+
+  GALLERY_CONFIG.categories.forEach(c => {
+    const chip = document.createElement('div');
+    chip.className = 'm3-chip ' + c.theme;
+    chip.setAttribute('data-cat', c.id);
+    chip.onclick = () => selectCategory(c.id);
+    chip.innerHTML = '<span class="chip-dot"></span> ' + escapeHtml(c.name);
+    frag.appendChild(chip);
+  });
+
+  track.innerHTML = '';
+  track.appendChild(frag);
+}
+
+function selectCategory(catId) {
+  if (!CATEGORY_ORDER.includes(catId)) catId = 'all';
+  state.selectedCategory = catId;
+  state.searchQuery = '';
+
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) searchInput.value = '';
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (clearBtn) clearBtn.style.display = 'none';
+
+  applyCategoryFilter(catId);
+}
+
+function applyCategoryFilter(catId) {
+  document.querySelectorAll('#homeCategoryChips .m3-chip').forEach(c => {
+    c.classList.toggle('active', c.getAttribute('data-cat') === catId);
+  });
+
+  const titleEl = document.getElementById('gallerySectionTitle');
+  if (catId === 'all') {
+    if (titleEl) titleEl.innerText = 'সকল ডিজাইন';
+    renderGalleryGrid(MASTER_DATABASE);
+  } else {
+    const cat = GALLERY_CONFIG.categories.find(c => c.id === catId);
+    if (titleEl) titleEl.innerText = cat ? cat.name : 'ডিজাইন কালেকশন';
+    renderGalleryGrid(CATEGORY_INDEX.get(catId) || []);
+  }
+}
+
+/* ============================================================
+   GALLERY GRID (shared render used by Home)
+============================================================ */
+function renderGalleryGrid(items) {
+  state.activeList = items;
+  const grid = document.getElementById('mainGalleryGrid');
+  if (!grid) return;
+
+  const countBadge = document.getElementById('designCountBadge');
+  if (countBadge) countBadge.innerText = items.length + ' Designs';
+
+  if (items.length === 0) {
+    grid.innerHTML =
+      '<div class="empty-state">' +
+      '<span class="material-symbols-rounded" style="font-size: 48px; color: var(--md-primary); opacity:0.8;">search_off</span>' +
+      '<h3 style="font-size: 16px; margin-top: 10px; color: var(--md-text-main);">কোনো ডিজাইন পাওয়া যায়নি</h3>' +
+      '<p style="font-size: 12px; color: var(--md-text-muted); margin-top: 4px;">অন্য Design Code বা ক্যাটাগরি দিয়ে চেষ্টা করুন</p>' +
+      '</div>';
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+  items.forEach(item => frag.appendChild(buildGalleryCard(item, items)));
+  grid.innerHTML = '';
+  grid.appendChild(frag);
+}
+
+function buildGalleryCard(item, listRef) {
+  const isFav = state.favorites.has(item.id);
+  const card = document.createElement('div');
+  card.className = 'm3-glass-card ripple-target';
+  card.onclick = () => {
+    const idx = listRef.findIndex(i => i.id === item.id);
+    openImageViewer(idx >= 0 ? idx : 0, listRef);
+  };
+
+  const badgesHtml =
+    (item.isPremium ? '<span class="badge-pill badge-premium">ROYAL</span>' : '') +
+    (item.isNew ? '<span class="badge-pill badge-new">NEW</span>' : '');
+
+  card.innerHTML =
+    '<div class="card-media-wrapper">' +
+      '<div class="card-skeleton"></div>' +
+      '<div class="card-badge-container">' +
+        '<div class="badge-stack">' + badgesHtml + '</div>' +
+        '<button class="btn-card-fav ' + (isFav ? 'is-fav' : '') + '" aria-label="Favorite button" data-fav-id="' + item.id + '">' +
+          '<span class="material-symbols-rounded" style="font-size: 18px;">favorite</span>' +
+        '</button>' +
+      '</div>' +
+      '<img src="' + escapeHtml(item.path) + '" decoding="async" loading="lazy" alt="' + escapeHtml(item.code) + '">' +
+    '</div>' +
+    '<div class="card-info-footer">' +
+      '<span class="code-chip">' + escapeHtml(item.code) + '</span>' +
+      '<span class="material-symbols-rounded" style="font-size: 18px; color: var(--md-primary);">arrow_outward</span>' +
+    '</div>';
+
+  const img = card.querySelector('img');
+  img.addEventListener('load', () => handleImageLoad(img));
+  img.addEventListener('error', () => handleImageError(img, item.code));
+
+  const favBtn = card.querySelector('.btn-card-fav');
+  favBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleFavorite(item.id, favBtn);
+  });
+
+  return card;
+}
+
+/* ============================================================
+   SEARCH (debounced, never mutates MASTER_DATABASE)
+============================================================ */
+function setupDebounceSearch() {
+  const input = document.getElementById('searchInput');
+  if (!input) return;
+
+  let timer = null;
+  input.addEventListener('input', (e) => {
+    clearTimeout(timer);
+    const val = e.target.value;
+    const clearBtn = document.getElementById('searchClearBtn');
+    if (clearBtn) clearBtn.style.display = val.trim() ? 'flex' : 'none';
+
+    timer = setTimeout(() => { handleLiveSearch(val); }, 150);
+  });
+}
+
+function clearSearch() {
+  const input = document.getElementById('searchInput');
+  if (input) input.value = '';
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (clearBtn) clearBtn.style.display = 'none';
+  state.searchQuery = '';
+  applyCategoryFilter(state.selectedCategory);
+}
+
+function normalizeSearchCode(q) {
+  // Accepts "SBH-001", "sbh001", "001", "1" -> "sbh-001"
+  const cleaned = q.replace(/^sbh-?/i, '').trim();
+  if (/^\d+$/.test(cleaned)) {
+    return 'sbh-' + cleaned.padStart(3, '0');
+  }
+  return null;
+}
+
+function handleLiveSearch(rawQuery, updateTitle = true) {
+  const q = rawQuery.trim().toLowerCase();
+  state.searchQuery = q;
+
+  const titleEl = document.getElementById('gallerySectionTitle');
+
+  if (!q) {
+    applyCategoryFilter(state.selectedCategory);
+    return;
+  }
+
+  if (updateTitle && titleEl) titleEl.innerText = 'সার্চ রেজাল্ট';
+
+  const normalizedCode = normalizeSearchCode(q);
+
+  const filtered = MASTER_DATABASE.filter(d => {
+    const codeLower = d.code.toLowerCase();
+    const catLower = d.categoryName.toLowerCase();
+    if (codeLower.includes(q)) return true;
+    if (normalizedCode && codeLower.includes(normalizedCode)) return true;
+    if (catLower.includes(q)) return true;
+    return false;
+  });
+
+  renderGalleryGrid(filtered);
+}
+
+function quickSearch(code) {
+  const input = document.getElementById('searchInput');
+  if (!input) return;
+  input.value = code;
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (clearBtn) clearBtn.style.display = 'flex';
+  handleLiveSearch(code);
+}
+
+/* ============================================================
+   FAVORITES
+============================================================ */
+function toggleFavorite(id, btn) {
+  if (state.favorites.has(id)) {
+    state.favorites.delete(id);
+    btn.classList.remove('is-fav');
+  } else {
+    state.favorites.add(id);
+    btn.classList.add('is-fav');
+  }
+  saveFavorites();
+}
+
+/* ============================================================
+   CATEGORIES TAB (full list)
+============================================================ */
+function renderFullCategoryStack() {
+  const stack = document.getElementById('fullCategoryStack');
+  if (!stack) return;
+
+  const frag = document.createDocumentFragment();
+
+  GALLERY_CONFIG.categories.forEach(cat => {
+    const count = (CATEGORY_INDEX.get(cat.id) || []).length;
+    const item = document.createElement('div');
+    item.className = 'ripple-target';
+    item.style.cssText = "background: var(--md-surface-glass); border-radius: var(--radius-md); padding: 20px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--md-card-border); cursor: pointer;";
+    item.onclick = () => {
+      selectCategory(cat.id);
+      switchTab('screen-home');
+    };
+
+    item.innerHTML =
+      '<div>' +
+        '<span class="badge-pill" style="background: var(--md-primary-container); color: var(--md-primary);">' + count + ' DESIGNS</span>' +
+        '<h3 style="font-size: 18px; margin-top: 6px;">' + escapeHtml(cat.name) + '</h3>' +
+      '</div>' +
+      '<span class="material-symbols-rounded" style="color: var(--md-primary);">arrow_forward_ios</span>';
+    frag.appendChild(item);
+  });
+
+  stack.innerHTML = '';
+  stack.appendChild(frag);
+}
+
+/* ============================================================
+   NEW DESIGNS TAB
+============================================================ */
+function renderNewDesignsGrid() {
+  const items = MASTER_DATABASE.filter(d => d.isNew);
+  const grid = document.getElementById('newDesignsGrid');
+  if (!grid) return;
+
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><p style="color: var(--md-text-muted); font-size: 13px;">কোনো নতুন ডিজাইন নেই</p></div>';
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+  items.forEach(item => frag.appendChild(buildGalleryCard(item, items)));
+  grid.innerHTML = '';
+  grid.appendChild(frag);
+}
+
+/* ============================================================
+   FULLSCREEN IMAGE VIEWER
+============================================================ */
+function openImageViewer(index, listRef) {
+  const list = listRef || state.activeList;
+  if (!list || index < 0 || index >= list.length) return;
+
+  state.activeList = list;
+  state.viewerIndex = index;
+  state.viewerOpen = true;
+
+  renderViewerImage(list[index]);
+  resetZoomTransform();
+
+  const viewer = document.getElementById('proImageViewer');
+  if (viewer) {
+    viewer.setAttribute('aria-hidden', 'false');
+    viewer.classList.add('active');
+    history.pushState({ viewerOpen: true }, '', '#viewer');
+  }
+}
+
+function renderViewerImage(item) {
+  const container = document.getElementById('viewerImgContainer');
+  const titleEl = document.getElementById('viewerCodeTitle');
+  if (titleEl) titleEl.innerText = item.code;
+  if (!container) return;
+
+  container.innerHTML =
+    '<div class="card-skeleton" style="position:absolute; inset:0; border-radius:12px;"></div>' +
+    '<img src="' + escapeHtml(item.path) + '" id="viewerTargetImg" class="viewer-img-target" alt="' + escapeHtml(item.code) + '">';
+
+  const img = container.querySelector('#viewerTargetImg');
+  const skel = container.querySelector('.card-skeleton');
+  img.addEventListener('load', () => { if (skel) skel.remove(); img.style.opacity = '1'; });
+  img.addEventListener('error', () => {
+    if (skel) skel.remove();
+    handleImageError(img, item.code);
+  });
+  img.style.opacity = '0';
+  img.style.transition = 'opacity 0.2s ease';
+}
+
+function closeImageViewer(pushState = true) {
+  state.viewerOpen = false;
+  const viewer = document.getElementById('proImageViewer');
+  if (viewer) {
+    viewer.setAttribute('aria-hidden', 'true');
+    viewer.classList.remove('active');
+  }
+  resetZoomTransform();
+  if (pushState && history.state && history.state.viewerOpen) {
+    history.back();
+  }
+}
+
+function resetZoomTransform() {
+  state.zoomScale = 1;
+  state.panX = 0;
+  state.panY = 0;
+  updateImageTransform();
+}
+
+function updateImageTransform() {
+  const img = document.getElementById('viewerTargetImg');
+  if (img) {
+    img.style.transform = 'scale(' + state.zoomScale + ') translate(' + state.panX + 'px, ' + state.panY + 'px)';
+  }
+}
+
+function setupViewerGestures() {
+  const stage = document.getElementById('viewerStage');
+  if (!stage) return;
+
+  let startX = 0, startY = 0;
+  let initialPinchDistance = 0;
+  let initialScale = 1;
+  let isPanning = false;
+  let isPinching = false;
+  let startPanX = 0, startPanY = 0;
+  let lastTap = 0;
+
+  stage.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      if (state.zoomScale > 1) {
+        isPanning = true;
+        startPanX = e.touches[0].clientX - state.panX;
+        startPanY = e.touches[0].clientY - state.panY;
+      }
+    } else if (e.touches.length === 2) {
+      isPanning = false;
+      isPinching = true;
+      initialPinchDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      initialScale = state.zoomScale;
+    }
+  }, { passive: true });
+
+  // Not passive: pan/pinch call preventDefault to stop native scroll/zoom conflicts.
+  stage.addEventListener('touchmove', e => {
+    if (e.touches.length === 1 && isPanning && state.zoomScale > 1) {
+      e.preventDefault();
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      state.panX = currentX - startPanX;
+      state.panY = currentY - startPanY;
+
+      const maxPan = 100 * state.zoomScale;
+      state.panX = Math.max(-maxPan, Math.min(maxPan, state.panX));
+      state.panY = Math.max(-maxPan, Math.min(maxPan, state.panY));
+
+      updateImageTransform();
+    } else if (e.touches.length === 2) {
+      e.preventDefault();
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      if (initialPinchDistance > 0) {
+        const scale = initialScale * (dist / initialPinchDistance);
+        state.zoomScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, scale));
+        if (state.zoomScale === 1) {
+          state.panX = 0;
+          state.panY = 0;
         }
+        updateImageTransform();
+      }
+    }
+  }, { passive: false });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initGalleryEngine();
-            setupRipples();
-            renderHeroBanners();
-            renderCategoryChips();
-            renderGalleryGrid(MASTER_DATABASE);
-            renderFullCategoryStack();
-            renderNewDesignsGrid();
-            setupGesturesAndZoom();
-            setupDebounceSearch();
+  stage.addEventListener('touchend', e => {
+    const wasPinching = isPinching;
+    isPanning = false;
+    isPinching = false;
 
-            setTimeout(() => {
-                navigateTo('screen-onboarding');
-            }, 2000);
-        });
+    if (wasPinching) { lastTap = 0; return; }
 
-        function navigateTo(screenId) {
-            const currentEl = document.getElementById(state.activeScreen);
-            const targetEl = document.getElementById(screenId);
+    if (e.changedTouches.length === 1 && state.zoomScale === 1) {
+      const diffX = e.changedTouches[0].clientX - startX;
+      const diffY = e.changedTouches[0].clientY - startY;
 
-            if (!targetEl || screenId === state.activeScreen) return;
+      if (diffY > 120 && Math.abs(diffX) < 60) {
+        closeImageViewer();
+        return;
+      }
 
-            if (currentEl) currentEl.classList.remove('active');
-            targetEl.classList.add('active');
-            state.activeScreen = screenId;
-
-            const hideNavsOn = ['screen-splash', 'screen-onboarding'];
-            const bottomNav = document.getElementById('m3BottomNav');
-            bottomNav.style.display = hideNavsOn.includes(screenId) ? 'none' : 'flex';
+      if (Math.abs(diffX) > 50 && Math.abs(diffY) < 80) {
+        if (diffX < 0 && state.viewerIndex < state.activeList.length - 1) {
+          openImageViewer(state.viewerIndex + 1, state.activeList);
+        } else if (diffX > 0 && state.viewerIndex > 0) {
+          openImageViewer(state.viewerIndex - 1, state.activeList);
         }
+      }
+    }
 
-        function switchTab(screenId, el) {
-            document.querySelectorAll('.m3-nav-item').forEach(i => i.classList.remove('active'));
-            if (el) el.classList.add('active');
+    const now = Date.now();
+    const tapLength = now - lastTap;
+    if (tapLength < 300 && tapLength > 0 && e.changedTouches.length === 1) {
+      if (state.zoomScale > 1) {
+        resetZoomTransform();
+      } else {
+        state.zoomScale = DOUBLE_TAP_ZOOM;
+        state.panX = 0;
+        state.panY = 0;
+        updateImageTransform();
+      }
+      lastTap = 0;
+    } else {
+      lastTap = now;
+    }
+  }, { passive: true });
+}
 
-            if (screenId === 'screen-home' && state.activeCategory !== 'all') {
-                filterCategory('all');
-            }
-            navigateTo(screenId);
-        }
+/* ============================================================
+   ONBOARDING
+============================================================ */
+function nextOnboardSlide() {
+  state.onboardingSlide++;
+  if (state.onboardingSlide > 2) {
+    completeOnboarding();
+    return;
+  }
 
-        function setupRipples() {
-            document.addEventListener('click', function (e) {
-                const target = e.target.closest('.ripple-target');
-                if (!target) return;
+  const track = document.getElementById('onboardTrack');
+  if (track) track.style.transform = 'translateX(-' + (state.onboardingSlide * 33.333) + '%) translateZ(0)';
 
-                const rect = target.getBoundingClientRect();
-                const circle = document.createElement('span');
-                const diameter = Math.max(rect.width, rect.height);
-                const radius = diameter / 2;
+  document.querySelectorAll('.dot-pill').forEach((d, i) => {
+    d.classList.toggle('active', i === state.onboardingSlide);
+  });
 
-                circle.style.width = circle.style.height = `${diameter}px`;
-                circle.style.left = `${e.clientX - rect.left - radius}px`;
-                circle.style.top = `${e.clientY - rect.top - radius}px`;
-                circle.className = 'ripple-wave';
+  const btn = document.getElementById('onboardNextBtn');
+  if (btn) {
+    if (state.onboardingSlide === 2) {
+      btn.innerHTML = 'গ্যালারিতে প্রবেশ করুন <span class="material-symbols-rounded">check</span>';
+    } else {
+      btn.innerHTML = 'পরবর্তী <span class="material-symbols-rounded">arrow_forward</span>';
+    }
+  }
+}
 
-                const existingRipple = target.querySelector('.ripple-wave');
-                if (existingRipple) existingRipple.remove();
-
-                target.appendChild(circle);
-            }, { passive: true });
-        }
-
-        function renderHeroBanners() {
-            const track = document.getElementById('heroBannerTrack');
-            const frag = document.createDocumentFragment();
-
-            GALLERY_CONFIG.banner.forEach((file, i) => {
-                const card = document.createElement('div');
-                card.className = 'hero-slide-card';
-                card.style.backgroundImage = `url('${file}'), url('${FALLBACKS[i % FALLBACKS.length]}')`;
-                card.innerHTML = `
-                    <div class="hero-slide-content">
-                        <span class="badge-pill badge-premium" style="margin-bottom: 6px; display: inline-block;">FEATURED</span>
-                        <h3 style="font-size: 18px; color: #FFF;">সৌদিয়া প্রিমিয়াম ক্যাটালগ</h3>
-                        <p style="font-size: 12px; color: var(--md-text-muted);">নতুন সেলাই প্যাটার্ন</p>
-                    </div>
-                `;
-                frag.appendChild(card);
-            });
-
-            track.innerHTML = '';
-            track.appendChild(frag);
-        }
-
-        function renderCategoryChips() {
-            const track = document.getElementById('homeCategoryChips');
-            const frag = document.createDocumentFragment();
-
-            const allChip = document.createElement('div');
-            allChip.className = 'm3-chip active theme-borqa';
-            allChip.onclick = function() { filterCategory('all', this); };
-            allChip.innerHTML = `<span class="chip-dot"></span> সকল ডিজাইন`;
-            frag.appendChild(allChip);
-
-            GALLERY_CONFIG.categories.forEach(c => {
-                const chip = document.createElement('div');
-                chip.className = `m3-chip ${c.theme}`;
-                chip.onclick = function() { filterCategory(c.id, this); };
-                chip.innerHTML = `<span class="chip-dot"></span> ${c.name}`;
-                frag.appendChild(chip);
-            });
-
-            track.innerHTML = '';
-            track.appendChild(frag);
-        }
-
-        function renderGalleryGrid(items) {
-            state.activeList = items;
-            const grid = document.getElementById('mainGalleryGrid');
-            document.getElementById('designCountBadge').innerText = `${items.length} Designs`;
-
-            if (items.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: span 2; text-align: center; padding: 40px 0;">
-                        <span class="material-symbols-rounded" style="font-size: 48px; color: var(--md-text-dim);">search_off</span>
-                        <h3 style="font-size: 16px; margin-top: 8px;">কোনো ডিজাইন পাওয়া যায়নি!</h3>
-                    </div>
-                `;
-                return;
-            }
-
-            const frag = document.createDocumentFragment();
-            items.forEach((item, idx) => {
-                const isFav = state.favorites.has(item.id);
-                const card = document.createElement('div');
-                card.className = 'm3-glass-card ripple-target';
-                card.onclick = () => openImageViewer(idx);
-
-                card.innerHTML = `
-                    <div class="card-media-wrapper">
-                        <div class="card-badge-container">
-                            <div>
-                                ${item.isPremium ? '<span class="badge-pill badge-premium">ROYAL</span>' : ''}
-                                ${item.isNew ? '<span class="badge-pill badge-new">NEW</span>' : ''}
-                            </div>
-                            <button class="btn-card-fav ${isFav ? 'is-fav' : ''}" aria-label="Favorite button" onclick="event.stopPropagation(); toggleFavorite('${item.id}', this)">
-                                <span class="material-symbols-rounded" style="font-size: 18px;">favorite</span>
-                            </button>
-                        </div>
-                        <img src="${item.path}" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='${item.fallback}'" alt="${item.code}">
-                    </div>
-                    <div class="card-info-footer">
-                        <span class="code-chip">${item.code}</span>
-                        <span class="material-symbols-rounded" style="font-size: 18px; color: var(--md-primary);">arrow_outward</span>
-                    </div>
-                `;
-                frag.appendChild(card);
-            });
-
-            grid.innerHTML = '';
-            grid.appendChild(frag);
-        }
-
-        function filterCategory(key, element) {
-            state.activeCategory = key;
-            if (element) {
-                document.querySelectorAll('#homeCategoryChips .m3-chip').forEach(c => c.classList.remove('active'));
-                element.classList.add('active');
-            }
-
-            const titleEl = document.getElementById('gallerySectionTitle');
-            if (key === 'all') {
-                titleEl.innerText = 'ট্রেন্ডিং কালেকশন';
-                renderGalleryGrid(MASTER_DATABASE);
-            } else {
-                const cat = GALLERY_CONFIG.categories.find(c => c.id === key);
-                titleEl.innerText = cat ? cat.name : 'ডিজাইন কালেকশন';
-                renderGalleryGrid(CATEGORY_INDEX.get(key) || []);
-            }
-        }
-
-        function setupDebounceSearch() {
-            const input = document.getElementById('searchInput');
-            let timer = null;
-            input.addEventListener('input', (e) => {
-                clearTimeout(timer);
-                timer = setTimeout(() => {
-                    handleLiveSearch(e.target.value);
-                }, 150);
-            });
-        }
-
-        function handleLiveSearch(query) {
-            const q = query.trim().toLowerCase();
-            if (!q) {
-                filterCategory(state.activeCategory);
-                return;
-            }
-            const filtered = MASTER_DATABASE.filter(d => d.code.toLowerCase().includes(q));
-            renderGalleryGrid(filtered);
-        }
-
-        function quickSearch(code) {
-            const input = document.getElementById('searchInput');
-            input.value = code;
-            handleLiveSearch(code);
-        }
-
-        function toggleFavorite(id, btn) {
-            if (state.favorites.has(id)) {
-                state.favorites.delete(id);
-                btn.classList.remove('is-fav');
-            } else {
-                state.favorites.add(id);
-                btn.classList.add('is-fav');
-            }
-        }
-
-        function renderFullCategoryStack() {
-            const stack = document.getElementById('fullCategoryStack');
-            const frag = document.createDocumentFragment();
-
-            GALLERY_CONFIG.categories.forEach(cat => {
-                const count = (CATEGORY_INDEX.get(cat.id) || []).length;
-                const item = document.createElement('div');
-                item.style.cssText = "background: var(--md-surface-glass); border-radius: var(--radius-md); padding: 20px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--md-card-border); cursor: pointer;";
-                item.onclick = () => {
-                    filterCategory(cat.id);
-                    switchTab('screen-home', document.querySelectorAll('.m3-nav-item')[0]);
-                };
-                item.innerHTML = `
-                    <div>
-                        <span class="badge-pill" style="background: var(--md-primary-container); color: var(--md-primary);">${count} DESIGNS</span>
-                        <h3 style="font-size: 18px; margin-top: 6px;">${cat.name}</h3>
-                    </div>
-                    <span class="material-symbols-rounded" style="color: var(--md-primary);">arrow_forward_ios</span>
-                `;
-                frag.appendChild(item);
-            });
-
-            stack.innerHTML = '';
-            stack.appendChild(frag);
-        }
-
-        function renderNewDesignsGrid() {
-            const items = MASTER_DATABASE.filter(d => d.isNew);
-            const grid = document.getElementById('newDesignsGrid');
-            const frag = document.createDocumentFragment();
-
-            items.forEach((item) => {
-                const masterIdx = MASTER_DATABASE.findIndex(m => m.id === item.id);
-                const card = document.createElement('div');
-                card.className = 'm3-glass-card ripple-target';
-                card.onclick = () => openImageViewerFromMaster(masterIdx);
-                card.innerHTML = `
-                    <div class="card-media-wrapper">
-                        <img src="${item.path}" decoding="async" loading="lazy" onerror="this.onerror=null;this.src='${item.fallback}'" alt="${item.code}">
-                    </div>
-                    <div class="card-info-footer">
-                        <span class="code-chip">${item.code}</span>
-                        <span class="material-symbols-rounded" style="font-size: 18px; color: var(--md-primary);">arrow_outward</span>
-                    </div>
-                `;
-                frag.appendChild(card);
-            });
-
-            grid.innerHTML = '';
-            grid.appendChild(frag);
-        }
-
-        function openImageViewerFromMaster(masterIndex) {
-            state.activeList = MASTER_DATABASE;
-            openImageViewer(masterIndex);
-        }
-
-        function openImageViewer(index) {
-            if (index < 0 || index >= state.activeList.length) return;
-            state.viewerIndex = index;
-            const item = state.activeList[index];
-
-            const img = document.getElementById('viewerTargetImg');
-            img.src = item.path;
-            img.onerror = () => { img.onerror = null; img.src = item.fallback; };
-            document.getElementById('viewerCodeTitle').innerText = item.code;
-
-            state.zoomScale = 1;
-            img.style.transform = 'scale(1) translateZ(0)';
-
-            const viewer = document.getElementById('proImageViewer');
-            viewer.setAttribute('aria-hidden', 'false');
-            viewer.classList.add('active');
-        }
-
-        function closeImageViewer() {
-            const viewer = document.getElementById('proImageViewer');
-            viewer.setAttribute('aria-hidden', 'true');
-            viewer.classList.remove('active');
-            const img = document.getElementById('viewerTargetImg');
-            img.src = '';
-        }
-
-        function setupGesturesAndZoom() {
-            const stage = document.getElementById('viewerStage');
-            const img = document.getElementById('viewerTargetImg');
-            let startX = 0, startY = 0;
-            let lastTap = 0;
-
-            stage.addEventListener('touchstart', e => {
-                if (e.touches.length === 1) {
-                    startX = e.touches[0].clientX;
-                    startY = e.touches[0].clientY;
-                }
-            }, { passive: true });
-
-            stage.addEventListener('touchend', e => {
-                if (e.changedTouches.length === 1) {
-                    const diffX = e.changedTouches[0].clientX - startX;
-                    const diffY = e.changedTouches[0].clientY - startY;
-
-                    if (diffY > 120 && Math.abs(diffX) < 50 && state.zoomScale === 1) {
-                        closeImageViewer();
-                        return;
-                    }
-
-                    if (Math.abs(diffX) > 50 && state.zoomScale === 1) {
-                        if (diffX < 0 && state.viewerIndex < state.activeList.length - 1) {
-                            openImageViewer(state.viewerIndex + 1);
-                        } else if (diffX > 0 && state.viewerIndex > 0) {
-                            openImageViewer(state.viewerIndex - 1);
-                        }
-                    }
-                }
-
-                const currentTime = Date.now();
-                const tapLength = currentTime - lastTap;
-                if (tapLength < 300 && tapLength > 0) {
-                    state.zoomScale = state.zoomScale === 1 ? 2.2 : 1;
-                    img.style.transform = `scale(${state.zoomScale}) translateZ(0)`;
-                }
-                lastTap = currentTime;
-            }, { passive: true });
-        }
-
-        function nextOnboardSlide() {
-            slideIndex++;
-            if (slideIndex > 2) {
-                navigateTo('screen-home');
-                return;
-            }
-            document.getElementById('onboardTrack').style.transform = `translateX(-${slideIndex * 33.333}%) translateZ(0)`;
-            const dots = document.querySelectorAll('.dot-pill');
-            dots.forEach((d, i) => d.classList.toggle('active', i === slideIndex));
-
-            if (slideIndex === 2) {
-                document.getElementById('onboardNextBtn').innerHTML = `গ্যালারিতে প্রবেশ করুন <span class="material-symbols-rounded">check</span>`;
-            }
-        }
-    </script>
+function completeOnboarding() {
+  safeSetStorage('sbh_onboarding_completed', 'true');
+  navigateTo('screen-home');
+}
+</script>
 </body>
 </html>
