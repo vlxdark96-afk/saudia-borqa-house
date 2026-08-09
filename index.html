@@ -42,7 +42,7 @@
   --transition-expressive: cubic-bezier(0.2, 0.8, 0.2, 1);
   --font-main: 'Hind Siliguri', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 
-  /* Z-Index hierarchy - single source of truth */
+  /* Z-Index hierarchy */
   --z-base: 1;
   --z-content: 10;
   --z-header: 30;
@@ -123,6 +123,35 @@ html, body {
 }
 
 .top-ad-banner-container iframe { display: block; margin: 0 auto; max-width: 100%; }
+
+.native-ad-wrapper {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 16px 0;
+  padding: 12px;
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.location-ad-wrapper {
+  width: 100%;
+  margin: 20px 0 10px 0;
+  padding: 12px;
+  background: var(--md-surface-glass);
+  border: 1px solid var(--md-card-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  min-height: 100px;
+}
 
 .screen-container {
   flex: 1;
@@ -688,6 +717,92 @@ html, body {
   flex-shrink: 0;
 }
 
+.action-buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.btn-action-sm {
+  flex: 1;
+  min-width: 90px;
+  background: var(--md-surface-variant);
+  border: 1px solid var(--md-card-border);
+  color: var(--md-text-main);
+  padding: 10px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action-sm.btn-whatsapp {
+  background: rgba(37, 211, 102, 0.15);
+  border-color: rgba(37, 211, 102, 0.4);
+  color: #25D366;
+}
+
+.btn-action-sm:active {
+  transform: scale(0.96);
+  background: var(--md-primary-container);
+}
+
+.qr-code-section {
+  text-align: center;
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--md-card-border);
+}
+
+.qr-image-wrapper {
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 12px auto;
+  background: #fff;
+  padding: 8px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.qr-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(255, 42, 122, 0.95);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--shadow-floating);
+  z-index: 3000;
+  opacity: 0;
+  transition: transform 0.3s var(--spring-bounce), opacity 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
 .google-map-frame {
   width: 100%; height: 220px;
   border-radius: var(--radius-md);
@@ -1000,7 +1115,43 @@ html, body {
             <p style="font-size: 13px; color: var(--md-primary); font-weight: 700; margin-top: 2px;">০১৭৪৫-৫১০৩৫৫ (কল করতে চাপুন)</p>
           </div>
         </a>
-        <h3 style="margin-top: 10px; margin-bottom: 10px; font-size: 14px;">গুগল ম্যাপ</h3>
+
+        <!-- Website Link Display -->
+        <div style="margin-top: 10px; margin-bottom: 12px; text-align: center;">
+          <a href="https://vlxdark96-afk.github.io/saudia-borqa-house/" target="_blank" style="color: var(--md-primary); font-size: 13px; font-weight: 600; text-decoration: underline;">
+            https://vlxdark96-afk.github.io/saudia-borqa-house/
+          </a>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-code-section">
+          <h3 style="margin-bottom: 10px; font-size: 14px; color: var(--md-text-main);">শো-রুম QR কোড</h3>
+          <div class="qr-image-wrapper">
+            <img src="qr.png" id="showroomQrImg" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://vlxdark96-afk.github.io/saudia-borqa-house/'" alt="Showroom QR Code">
+          </div>
+          <button class="btn-action-sm ripple-target" style="margin: 0 auto 10px auto;" onclick="downloadQrCode()">
+            <span class="material-symbols-rounded" style="font-size:18px;">download</span>
+            QR ডাউনলোড করুন
+          </button>
+        </div>
+
+        <!-- Action Buttons: Share / Copy Link / WhatsApp -->
+        <div class="action-buttons-group">
+          <button class="btn-action-sm ripple-target" onclick="copyWebsiteLink()">
+            <span class="material-symbols-rounded" style="font-size:18px;">content_copy</span>
+            কপি লিংক
+          </button>
+          <button class="btn-action-sm btn-whatsapp ripple-target" onclick="shareWhatsApp()">
+            <span class="material-symbols-rounded" style="font-size:18px;">chat</span>
+            WhatsApp
+          </button>
+          <button class="btn-action-sm ripple-target" onclick="shareWebsiteLink()">
+            <span class="material-symbols-rounded" style="font-size:18px;">share</span>
+            শেয়ার করুন
+          </button>
+        </div>
+
+        <h3 style="margin-top: 20px; margin-bottom: 10px; font-size: 14px;">গুগল ম্যাপ</h3>
         <div class="google-map-frame" id="mapFrameContainer">
           <div class="map-fallback" id="mapFallback">
             <span class="material-symbols-rounded">map</span>
@@ -1008,6 +1159,13 @@ html, body {
             <a href="https://maps.google.com/maps?q=%E0%A6%B6%E0%A6%B9%E0%A7%80%E0%A6%A6%20%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A7%87%E0%A6%9F%20%E0%A6%95%E0%A6%B2%E0%A7%87%E0%A6%9C%20%E0%A6%B0%E0%A7%8B%E0%A6%A1%20%E0%A6%AB%E0%A7%87%E0%A6%A8%E0%A7%80" target="_blank" rel="noopener">গুগল ম্যাপে দেখুন</a>
           </div>
         </div>
+
+        <!-- ADSTERRA NATIVE BANNER: LOCATION PAGE BOTTOM -->
+        <div class="location-ad-wrapper">
+          <script async="async" data-cfasync="false" src="https://pl30759429.effectivecpmnetwork.com/002213e37ee214df7e373f07b00646d2/invoke.js"></script>
+          <div id="container-002213e37ee214df7e373f07b00646d2"></div>
+        </div>
+
       </div>
     </div>
 
@@ -1048,12 +1206,17 @@ html, body {
   </nav>
 </div>
 
+<!-- Reusable Toast Notification Container -->
+<div id="toastNotification" class="toast-notification"></div>
+
 <script>
 'use strict';
 
 /* ============================================================
    CONFIG / CONSTANTS
 ============================================================ */
+const WEBSITE_URL = 'https://vlxdark96-afk.github.io/saudia-borqa-house/';
+
 const GALLERY_CONFIG = {
   banner: ['gown1.jpg', 'borqa1.jpg'],
   categories: [
@@ -1115,14 +1278,14 @@ function loadFavorites() {
   try {
     const parsed = JSON.parse(saved);
     if (Array.isArray(parsed)) state.favorites = new Set(parsed);
-  } catch (e) { /* corrupted data ignored safely */ }
+  } catch (e) { }
 }
 function saveFavorites() {
   safeSetStorage('sbh_fav_designs', JSON.stringify([...state.favorites]));
 }
 
 /* ============================================================
-   IMAGE LOADING (ONE reusable system for all image contexts)
+   IMAGE LOADING
 ============================================================ */
 function handleImageLoad(imgEl) {
   imgEl.classList.add('loaded');
@@ -1158,6 +1321,89 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = String(str == null ? '' : str);
   return div.innerHTML;
+}
+
+/* ============================================================
+   TOAST NOTIFICATION SYSTEM
+============================================================ */
+let toastTimer = null;
+function showToast(message) {
+  const toast = document.getElementById('toastNotification');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2500);
+}
+
+/* ============================================================
+   LOCATION PAGE FEATURES (COPY / SHARE / WHATSAPP / DOWNLOAD)
+============================================================ */
+function copyWebsiteLink() {
+  const url = WEBSITE_URL;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('লিংক কপি করা হয়েছে!');
+    }).catch(() => {
+      fallbackCopyText(url);
+    });
+  } else {
+    fallbackCopyText(url);
+  }
+}
+
+function fallbackCopyText(text) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-9999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showToast('লিংক কপি করা হয়েছে!');
+  } catch (err) {
+    showToast('লিংক কপি করা সম্ভব হয়নি');
+  }
+  document.body.removeChild(textArea);
+}
+
+function shareWhatsApp() {
+  const message = 'সৌদিয়া বোরকা হাউজ - এক্সক্লুসিভ বোরকা ও আবায়া ক্যাটালগ দেখুন এখানে: ' + WEBSITE_URL;
+  const whatsappUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(message);
+  window.open(whatsappUrl, '_blank');
+}
+
+function shareWebsiteLink() {
+  const shareData = {
+    title: 'সৌদিয়া বোরকা হাউজ',
+    text: 'সৌদিয়া বোরকা হাউজ - Premium Design Gallery দেখুন:',
+    url: WEBSITE_URL
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData).catch(() => {});
+  } else {
+    shareWhatsApp();
+  }
+}
+
+function downloadQrCode() {
+  const qrImg = document.getElementById('showroomQrImg');
+  if (!qrImg) return;
+  const src = qrImg.src;
+
+  const a = document.createElement('a');
+  a.href = src;
+  a.download = 'saudia-borqa-qr.png';
+  a.target = '_blank';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  showToast('QR Code ডাউনলোড শুরু হয়েছে');
 }
 
 /* ============================================================
@@ -1211,7 +1457,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const startTime = Date.now();
   const onboardingDone = safeGetStorage('sbh_onboarding_completed') === 'true';
   const MIN_SPLASH_MS = 1000;
-  const MAX_SPLASH_MS = 2500; // hard ceiling so splash can never hang indefinitely
+  const MAX_SPLASH_MS = 2500;
 
   let launched = false;
   function launch() {
@@ -1228,13 +1474,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, remaining);
   }
 
-  // Launch on load, but never depend solely on external resources finishing.
   window.addEventListener('load', launch);
   setTimeout(launch, MAX_SPLASH_MS);
 });
 
 /* ============================================================
-   SCREEN NAVIGATION (single source of truth)
+   SCREEN NAVIGATION
 ============================================================ */
 function navigateTo(screenId, pushHistory = true) {
   const targetEl = document.getElementById(screenId);
@@ -1279,9 +1524,6 @@ function switchTab(screenId) {
 
 /* ============================================================
    ANDROID BACK / BROWSER HISTORY
-   Priority: viewer open -> close viewer
-             non-home screen -> home
-             home -> default browser behavior
 ============================================================ */
 function setupHistoryBack() {
   history.replaceState({ screen: 'screen-splash' }, '', '#splash');
@@ -1296,12 +1538,11 @@ function setupHistoryBack() {
       navigateTo('screen-home', false);
       return;
     }
-    // Already on Home: let the browser's natural back behavior proceed.
   });
 }
 
 /* ============================================================
-   ADVERTISEMENT (isolated, failure-safe)
+   ADVERTISEMENT
 ============================================================ */
 function loadTopAdBanner() {
   const container = document.getElementById('topAdBanner');
@@ -1331,17 +1572,15 @@ function scheduleSocialBarAd() {
       const script = document.createElement('script');
       script.src = 'https://pl30727473.effectivecpmnetwork.com/00/4f/db/004fdb7abb9d6764ae8566292b609e32.js';
       script.async = true;
-      script.onerror = () => { /* ad failed silently, app continues */ };
+      script.onerror = () => { };
       document.body.appendChild(script);
       state.socialBarInjected = true;
-    } catch (e) {
-      /* ad injection failed safely, app continues */
-    }
+    } catch (e) { }
   }, SOCIAL_BAR_DELAY_MS);
 }
 
 /* ============================================================
-   GOOGLE MAP (lazy, failure-safe)
+   GOOGLE MAP
 ============================================================ */
 function loadGoogleMapLazy() {
   const container = document.getElementById('mapFrameContainer');
@@ -1366,7 +1605,7 @@ function showMapFallback(container) {
 }
 
 /* ============================================================
-   RIPPLE EFFECT (event delegation, single listener)
+   RIPPLE EFFECT
 ============================================================ */
 function setupRipples() {
   document.addEventListener('click', function (e) {
@@ -1403,7 +1642,6 @@ function renderHeroBanners() {
     card.className = 'hero-slide-card';
     card.style.backgroundImage = "url('" + file + "')";
 
-    // Failure-safe: preload check via Image object; on error, remove bg and show icon fallback.
     const testImg = new Image();
     testImg.onerror = () => {
       card.style.backgroundImage = 'none';
@@ -1501,8 +1739,29 @@ function applyCategoryFilter(catId) {
 }
 
 /* ============================================================
-   GALLERY GRID (shared render used by Home)
+   GALLERY GRID (WITH NATIVE BANNER AD AFTER 25th IMAGE)
 ============================================================ */
+function createAdElement() {
+  const adWrapper = document.createElement('div');
+  adWrapper.className = 'native-ad-wrapper';
+
+  /* <!-- ADSTERRA NATIVE BANNER: GALLERY AFTER 25TH IMAGE --> */
+  const comment = document.createComment(' ADSTERRA NATIVE BANNER: GALLERY AFTER 25TH IMAGE ');
+  adWrapper.appendChild(comment);
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.setAttribute('data-cfasync', 'false');
+  script.src = 'https://pl30759429.effectivecpmnetwork.com/002213e37ee214df7e373f07b00646d2/invoke.js';
+
+  const container = document.createElement('div');
+  container.id = 'container-002213e37ee214df7e373f07b00646d2';
+
+  adWrapper.appendChild(script);
+  adWrapper.appendChild(container);
+  return adWrapper;
+}
+
 function renderGalleryGrid(items) {
   state.activeList = items;
   const grid = document.getElementById('mainGalleryGrid');
@@ -1522,7 +1781,18 @@ function renderGalleryGrid(items) {
   }
 
   const frag = document.createDocumentFragment();
-  items.forEach(item => frag.appendChild(buildGalleryCard(item, items)));
+  let adInserted = false;
+
+  items.forEach((item, index) => {
+    frag.appendChild(buildGalleryCard(item, items));
+
+    // 25th Image-এর ঠিক পরেই অ্যাড প্লেস করা (Index 24)
+    if (index === 24 && !adInserted) {
+      frag.appendChild(createAdElement());
+      adInserted = true;
+    }
+  });
+
   grid.innerHTML = '';
   grid.appendChild(frag);
 }
@@ -1570,7 +1840,7 @@ function buildGalleryCard(item, listRef) {
 }
 
 /* ============================================================
-   SEARCH (debounced, never mutates MASTER_DATABASE)
+   SEARCH
 ============================================================ */
 function setupDebounceSearch() {
   const input = document.getElementById('searchInput');
@@ -1597,7 +1867,6 @@ function clearSearch() {
 }
 
 function normalizeSearchCode(q) {
-  // Accepts "SBH-001", "sbh001", "001", "1" -> "sbh-001"
   const cleaned = q.replace(/^sbh-?/i, '').trim();
   if (/^\d+$/.test(cleaned)) {
     return 'sbh-' + cleaned.padStart(3, '0');
@@ -1656,7 +1925,7 @@ function toggleFavorite(id, btn) {
 }
 
 /* ============================================================
-   CATEGORIES TAB (full list)
+   CATEGORIES TAB
 ============================================================ */
 function renderFullCategoryStack() {
   const stack = document.getElementById('fullCategoryStack');
@@ -1808,7 +2077,6 @@ function setupViewerGestures() {
     }
   }, { passive: true });
 
-  // Not passive: pan/pinch call preventDefault to stop native scroll/zoom conflicts.
   stage.addEventListener('touchmove', e => {
     if (e.touches.length === 1 && isPanning && state.zoomScale > 1) {
       e.preventDefault();
