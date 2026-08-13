@@ -46,7 +46,7 @@
   --z-base: 1;
   --z-content: 10;
   --z-header: 30;
-  --z-bottom-nav: 100;
+  --z-bottom-nav: 500;
   --z-ad: 150;
   --z-splash: 900;
   --z-onboarding: 800;
@@ -171,7 +171,7 @@ html, body {
   transition: opacity 0.28s var(--transition-expressive), transform 0.28s var(--transition-expressive), visibility 0s linear 0.28s;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: 90px;
+  padding-bottom: 100px; /* Fixed spacing for bottom nav */
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   z-index: var(--z-content);
@@ -574,6 +574,30 @@ html, body {
   padding: 0 16px 24px 16px;
 }
 
+/* দোকান পিক (Shop Grid) সেকশনের জন্য ১-কলাম লেআউট ও ফুল ইমেজ ভিউ ফিক্স */
+.m3-shop-grid-single {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  padding: 0 20px 24px 20px !important;
+}
+
+.m3-shop-grid-single .m3-glass-card {
+  width: 100%;
+}
+
+.m3-shop-grid-single .card-media-wrapper {
+  aspect-ratio: auto !important;
+  max-height: none !important;
+  height: auto !important;
+}
+
+.m3-shop-grid-single .card-media-wrapper img {
+  object-fit: contain !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
 @media (min-width: 380px) {
   .m3-gallery-grid { gap: 14px; padding: 0 20px 24px 20px; }
 }
@@ -694,7 +718,7 @@ html, body {
   align-items: center;
 }
 
-.code-chip { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 800; color: var(--md-text-main); }
+.code-chip { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 800; color: var(--md-text-main); white-space: nowrap; }
 
 .empty-state { grid-column: 1 / -1; text-align: center; padding: 40px 10px; }
 
@@ -909,18 +933,21 @@ html, body {
 
 .viewer-bottom-bar { padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); text-align: center; position: relative; z-index: var(--z-viewer-controls); }
 
+/* FIXED & OPTIMIZED BOTTOM NAVIGATION BAR */
 .m3-navigation-bar {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: calc(76px + env(safe-area-inset-bottom, 0px));
+  height: calc(68px + env(safe-area-inset-bottom, 0px));
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  background: rgba(18, 18, 23, 0.85);
+  background: rgba(18, 18, 23, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--md-card-border);
   display: none;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  padding-left: 8px;
+  padding-right: 8px;
   z-index: var(--z-bottom-nav);
   transform: translateZ(0);
 }
@@ -931,18 +958,29 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  gap: 2px;
   color: var(--md-text-muted);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  width: 25%;
-  min-height: 48px;
-  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 4px 0;
+  text-align: center;
+}
+
+.m3-nav-item span:not(.material-symbols-rounded) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .nav-icon-pill {
-  width: 56px; height: 32px;
+  width: 48px;
+  height: 28px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -950,7 +988,11 @@ html, body {
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.m3-nav-item.active { color: var(--md-text-main); }
+.nav-icon-pill .material-symbols-rounded {
+  font-size: 20px;
+}
+
+.m3-nav-item.active { color: var(--md-text-main); font-weight: 700; }
 .m3-nav-item.active .nav-icon-pill { background: var(--md-primary-container); color: var(--md-primary); }
 
 .app-footer { padding: 30px 20px; text-align: center; border-top: 1px solid var(--md-card-border); }
@@ -1088,6 +1130,17 @@ html, body {
       <div class="m3-gallery-grid" id="newDesignsGrid" style="padding-top: 16px;"></div>
     </div>
 
+    <!-- NEW SCREEN: SHOP PICS -->
+    <div id="screen-shop" class="screen" role="region" aria-label="Shop Pictures">
+      <div class="floating-header">
+        <div>
+          <span class="greeting-sub">SHOWROOM GALLERY</span>
+          <h2 class="greeting-title">দোকান পিক</h2>
+        </div>
+      </div>
+      <div class="m3-shop-grid-single" id="shopGrid" style="padding-top: 16px;"></div>
+    </div>
+
     <div id="screen-location" class="screen" role="region" aria-label="Showroom Location">
       <div class="floating-header">
         <h2 class="greeting-title">লোকেশন ও যোগাযোগ</h2>
@@ -1199,6 +1252,10 @@ html, body {
       <div class="nav-icon-pill"><span class="material-symbols-rounded">auto_awesome</span></div>
       <span>নতুন ডিজাইন</span>
     </div>
+    <div class="m3-nav-item ripple-target" data-screen="screen-shop" onclick="switchTab('screen-shop')">
+      <div class="nav-icon-pill"><span class="material-symbols-rounded">storefront</span></div>
+      <span>দোকান পিক</span>
+    </div>
     <div class="m3-nav-item ripple-target" data-screen="screen-location" onclick="switchTab('screen-location')">
       <div class="nav-icon-pill"><span class="material-symbols-rounded">distance</span></div>
       <span>লোকেশন</span>
@@ -1229,8 +1286,14 @@ const GALLERY_CONFIG = {
   ]
 };
 
+const SHOP_PICS_DATA = [
+  { id: 'shop-1', code: 'SHOWROOM 1', path: 'shop1.jpg' },
+  { id: 'shop-2', code: 'SHOWROOM 2', path: 'shop2.jpg' },
+  { id: 'shop-3', code: 'SHOWROOM 3', path: 'shop3.jpg' }
+];
+
 const CATEGORY_ORDER = ['all', 'borqa', 'abaya', 'khimar', 'niqab', 'gown', 'apron'];
-const NAV_SCREENS = ['screen-home', 'screen-categories', 'screen-new', 'screen-location'];
+const NAV_SCREENS = ['screen-home', 'screen-categories', 'screen-new', 'screen-shop', 'screen-location'];
 const HIDE_NAV_SCREENS = ['screen-splash', 'screen-onboarding'];
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
@@ -1339,7 +1402,7 @@ function showToast(message) {
 }
 
 /* ============================================================
-   LOCATION PAGE FEATURES (COPY / SHARE / WHATSAPP / DOWNLOAD)
+   LOCATION PAGE FEATURES
 ============================================================ */
 function copyWebsiteLink() {
   const url = WEBSITE_URL;
@@ -1448,6 +1511,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGalleryGrid(MASTER_DATABASE);
   renderFullCategoryStack();
   renderNewDesignsGrid();
+  renderShopPicsGrid();
   setupViewerGestures();
   setupDebounceSearch();
   setupHistoryBack();
@@ -1479,7 +1543,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ============================================================
-   SCREEN NAVIGATION
+   SCREEN NAVIGATION & BOTTOM NAV FIX
 ============================================================ */
 function navigateTo(screenId, pushHistory = true) {
   const targetEl = document.getElementById(screenId);
@@ -1492,11 +1556,19 @@ function navigateTo(screenId, pushHistory = true) {
 
   const bottomNav = document.getElementById('m3BottomNav');
   if (bottomNav) {
-    bottomNav.classList.toggle('visible', !HIDE_NAV_SCREENS.includes(screenId));
+    if (HIDE_NAV_SCREENS.includes(screenId)) {
+      bottomNav.classList.remove('visible');
+    } else {
+      bottomNav.classList.add('visible');
+    }
   }
 
   document.querySelectorAll('.m3-nav-item').forEach(nav => {
-    nav.classList.toggle('active', nav.getAttribute('data-screen') === screenId);
+    if (nav.getAttribute('data-screen') === screenId) {
+      nav.classList.add('active');
+    } else {
+      nav.classList.remove('active');
+    }
   });
 
   if (screenId === 'screen-location' && !state.mapLoaded) {
@@ -1739,13 +1811,12 @@ function applyCategoryFilter(catId) {
 }
 
 /* ============================================================
-   GALLERY GRID (WITH NATIVE BANNER AD AFTER 25th IMAGE)
+   GALLERY GRID
 ============================================================ */
 function createAdElement() {
   const adWrapper = document.createElement('div');
   adWrapper.className = 'native-ad-wrapper';
 
-  /* <!-- ADSTERRA NATIVE BANNER: GALLERY AFTER 25TH IMAGE --> */
   const comment = document.createComment(' ADSTERRA NATIVE BANNER: GALLERY AFTER 25TH IMAGE ');
   adWrapper.appendChild(comment);
 
@@ -1786,7 +1857,6 @@ function renderGalleryGrid(items) {
   items.forEach((item, index) => {
     frag.appendChild(buildGalleryCard(item, items));
 
-    // 25th Image-এর ঠিক পরেই অ্যাড প্লেস করা (Index 24)
     if (index === 24 && !adInserted) {
       frag.appendChild(createAdElement());
       adInserted = true;
@@ -1971,6 +2041,19 @@ function renderNewDesignsGrid() {
 
   const frag = document.createDocumentFragment();
   items.forEach(item => frag.appendChild(buildGalleryCard(item, items)));
+  grid.innerHTML = '';
+  grid.appendChild(frag);
+}
+
+/* ============================================================
+   SHOP PICS TAB
+============================================================ */
+function renderShopPicsGrid() {
+  const grid = document.getElementById('shopGrid');
+  if (!grid) return;
+
+  const frag = document.createDocumentFragment();
+  SHOP_PICS_DATA.forEach(item => frag.appendChild(buildGalleryCard(item, SHOP_PICS_DATA)));
   grid.innerHTML = '';
   grid.appendChild(frag);
 }
