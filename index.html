@@ -1146,6 +1146,17 @@ html, body {
         <h2 class="greeting-title">লোকেশন ও যোগাযোগ</h2>
       </div>
       <div class="location-glass-card">
+        
+        <!-- CEO / Proprietor Card Section (UPDATED WITH CLICK TO FULLSCREEN VIEW) -->
+        <div style="display: flex; align-items: center; gap: 16px; background: rgba(255, 255, 255, 0.05); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--md-card-border); margin-bottom: 20px;">
+          <img src="owner.jpg" alt="Shop Owner" onclick="openSingleImageViewer('owner.jpg', 'PROPRIETOR & CEO')" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--md-primary); flex-shrink: 0; cursor: pointer;">
+          <div>
+            <span style="font-size: 11px; color: var(--md-primary); font-weight: 700; letter-spacing: 0.5px;">PROPRIETOR & CEO</span>
+            <h3 style="font-size: 16px; color: var(--md-text-main); margin-top: 2px;">প্রোপ্রাইটর</h3>
+            <p style="font-size: 12px; color: var(--md-text-muted);">সৌদিয়া বোরকা হাউজ</p>
+          </div>
+        </div>
+
         <h2 style="color: var(--md-primary); margin-bottom: 20px; font-size: 22px;">সৌদিয়া বোরকা হাউজ</h2>
         <div class="loc-info-item">
           <span class="material-symbols-rounded">location_on</span>
@@ -1429,7 +1440,7 @@ function fallbackCopyText(text) {
     document.execCommand('copy');
     showToast('লিংক কপি করা হয়েছে!');
   } catch (err) {
-    showToast('লিংক কপি করা সম্ভব হয়নি');
+    showToast('লিংক কপি সম্ভব হয়নি');
   }
   document.body.removeChild(textArea);
 }
@@ -2078,6 +2089,16 @@ function openImageViewer(index, listRef) {
     viewer.classList.add('active');
     history.pushState({ viewerOpen: true }, '', '#viewer');
   }
+}
+
+/* নির্দিষ্ট কোনো একটি একক ছবি ফুল স্ক্রিনে দেখার জন্য হেল্পার ফাংশন */
+function openSingleImageViewer(imagePath, titleCode) {
+  const singleItem = [{
+    id: 'single-' + Date.now(),
+    code: titleCode || 'PROPRIETOR & CEO',
+    path: imagePath
+  }];
+  openImageViewer(0, singleItem);
 }
 
 function renderViewerImage(item) {
